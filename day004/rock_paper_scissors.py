@@ -62,5 +62,6 @@ else:
                 break
 
         previous_value = value
+        previous_value = value
 
     
