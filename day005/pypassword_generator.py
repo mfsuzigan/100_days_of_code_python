@@ -3,7 +3,7 @@ import random
 # ASCII:
 
 # 33-47 - special chars interval 1
-# 58-64 - special chars interval 1
+# 58-64 - special chars interval 2
 # 48-57 - digits
 # 97-122 - letters interval 1, lowercase
 # 65-90 - letters interval 2, uppercase
@@ -40,4 +40,4 @@ for char_type in ascii_limits_by_char_type:
     char_list.extend(get_char_list(char_type, char_amount))
 
 random.shuffle(char_list)
-print(f"Your password: {''.join(char_list)}")
+print(f"Here's your password: {''.join(char_list)}")
