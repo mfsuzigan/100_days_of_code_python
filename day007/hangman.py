@@ -1,13 +1,16 @@
 import requests
 import os
 from hangman_art import stages
+from hangman_art import logo
+import unicodedata
 
 def getWord():
     form_data = {"num_words": "1"}
-    word = requests.post("https://www.invertexto.com/ajax/words.php", data=form_data).json()
-    return word["result"][0]["word"]
+    wordResponse = requests.post("https://www.invertexto.com/ajax/words.php", data=form_data).json()
+    word = wordResponse["result"][0]["word"]
+    return unicodedata.normalize(u'NFKD', word).encode('ascii', 'ignore').decode('utf8')
 
-def printGame(word, correctly_guessed_letters, number_lives):
+def printGame(word, correctly_guessed_letters, number_lives, message):
     slots = ""
     os.system('clear')
 
@@ -18,32 +21,50 @@ def printGame(word, correctly_guessed_letters, number_lives):
         else:
             slots += "_ " 
     
-    print(slots)
+    print(logo)
     print(stages[number_lives])
+    print(slots)
 
-word = "cinemática"#getWord()
-letters = list(dict.fromkeys(word))
-correctly_guessed_letters = []
-number_lives = 6
+    if (message != ""):
+        print(f"\n{message}")
 
-while number_lives != 0 and len(correctly_guessed_letters) != len(letters):
-    printGame(word, correctly_guessed_letters, number_lives)
+def gameIsOver(number_lives, correctly_guessed_letters, letters):
+    return number_lives == 0 or len(correctly_guessed_letters) == len(letters)
 
-    letter = input(f"\nGuess a letter (lives left = {number_lives}): ")
+def main():
+    word = getWord()
+    letters = list(dict.fromkeys(word))
+    correctly_guessed_letters = []
+    already_guessed_letters = []
+    number_lives = 6
+    message = ""
 
-    if letter in letters:
-        correctly_guessed_letters.append(letter)
-        print("\n\nRight!")
+    while not gameIsOver(number_lives, correctly_guessed_letters, letters):
+        printGame(word, correctly_guessed_letters, number_lives, message)
+
+        letter = input(f"\nGuess a letter (lives left = {number_lives}): ")
+
+        if (letter in already_guessed_letters):
+            message = f"'{letter}' has already been guessed!"
+
+        else:
+            already_guessed_letters.append(letter)
+
+            if letter in letters:
+                message = "Right!"
+                correctly_guessed_letters.append(letter)
+
+            else:
+                message = f"Wrong, '{letter}' is not in the word!"
+                number_lives -= 1
+
+    if number_lives == 0:
+        message = f"Game over, you lose! Word was: '{word}'"
 
     else:
-        number_lives -= 1
-        print("\n\nWrong!")
+        message = "Game over, you win!"
 
-printGame(word, correctly_guessed_letters,number_lives)
+    printGame(word, correctly_guessed_letters,number_lives, message)
 
-if number_lives == 0:
-    print(f"Game over, you lose! Word was: {word}")
-
-else:
-    print("Game over, you win!")
-
+if __name__ == "__main__":
+    main()
