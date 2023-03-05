@@ -22,7 +22,7 @@ def has_busted(cards):
     return sum(cards) > 21
 
 def has_blackjack(cards):
-    return sum(cards) == 21 and (11 in cards)
+    return sum(cards) == 21 and len(cards) == 2
 
 def compare_cards(player_cards, pc_cards):
     return (21 - sum(player_cards)) - (21 - sum(pc_cards))
@@ -51,6 +51,10 @@ def play():
     
     while not game_is_over:
         os.system("clear")
+
+        player_cards = [10, 5]
+        pc_cards = [11, 11]
+
         print_cards(player_cards, pc_cards, True)
 
         if has_blackjack(pc_cards):
