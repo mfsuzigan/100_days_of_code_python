@@ -21,6 +21,9 @@ def print_cards(player_cards, pc_cards, should_conceal_pc_cards = False):
 def has_busted(cards):
     return sum(cards) > 21
 
+def has_blackjack(cards):
+    return sum(cards) == 21 and (11 in cards)
+
 def compare_cards(player_cards, pc_cards):
     return (21 - sum(player_cards)) - (21 - sum(pc_cards))
 
@@ -37,47 +40,66 @@ def play():
     pc_cards.append(draw_card())
     pc_cards.append(draw_card())
     
+    # -2: PC blackjack
+    # -1: PC wins
+    # 0: draw (push)
+    # 1: player wins
+    # 2: player blackjack
     game_outcome = -1
+
     game_is_over = False
     
     while not game_is_over:
         os.system("clear")
         print_cards(player_cards, pc_cards, True)
-        action = str.lower(input("\nHit (H) or stand (S)? "))
 
-        if action == 'h':
-            # player chose to draw another card
-            player_cards.append(draw_card())
-            game_is_over = has_busted(player_cards)
+        if has_blackjack(pc_cards):
+            game_is_over = True
+            game_outcome = -2
 
-        elif action == 's':
-            # player chose to remain with their cards
+        elif has_blackjack(player_cards):
+            game_is_over = True
+            game_outcome = 2
 
-            while not game_is_over:
-                cards_check = compare_cards(player_cards, pc_cards)
+        else:
+            player_action = str.lower(input("\nHit (H) or stand (S)? "))
 
-                if cards_check == 0 and sum(pc_cards) >= 17:
-                    # draw: both player and PC are at 21
-                    game_is_over = True
-                    game_outcome = 0
+            if player_action == 'h':
+                # player chose to draw another card
+                player_cards.append(draw_card())
+                game_is_over = has_busted(player_cards)
 
-                elif cards_check < 0 or cards_check == 0:
-                    #player is winning, draw card
-                    pc_cards.append(draw_card())
+            elif player_action == 's':
+                # player chose to remain with their cards
 
-                    if has_busted(pc_cards):
-                        # PC busted, player wins
+                while not game_is_over:
+                    cards_check = compare_cards(player_cards, pc_cards)
+
+                    if cards_check == 0 and sum(pc_cards) >= 17:
+                        # draw below of 21
                         game_is_over = True
-                        game_outcome = 1
+                        game_outcome = 0
 
-                elif cards_check > 0:
-                    game_is_over = True
+                    elif cards_check < 0 or cards_check == 0:
+                        #player is winning, draw card
+                        pc_cards.append(draw_card())
+
+                        if has_busted(pc_cards):
+                            # PC busted, player wins
+                            game_is_over = True
+                            game_outcome = 1
+
+                    elif cards_check > 0:
+                        game_is_over = True
 
     os.system("clear")
     print_cards(player_cards, pc_cards)
     print("\n")
 
-    if game_outcome == 1:
+    if game_outcome == -2 or game_outcome == 2:
+        print("BLACKJACK!\n")
+
+    if game_outcome >= 1:
         print("You win! 😎")
 
     elif game_outcome ==  0:
