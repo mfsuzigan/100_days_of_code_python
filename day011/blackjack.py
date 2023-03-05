@@ -56,7 +56,7 @@ def play():
             while not game_is_over:
                 cards_check = compare_cards(player_cards, pc_cards)
 
-                if cards_check == 0 and sum(pc_cards) == 21:
+                if cards_check == 0 and sum(pc_cards) >= 17:
                     # draw: both player and PC are at 21
                     game_is_over = True
                     game_outcome = 0
@@ -81,7 +81,7 @@ def play():
         print("You win! 😎")
 
     elif game_outcome ==  0:
-        print("It's a draw... 🧐")
+        print("Push! 🧐")
 
     else:
         print("You lose 😭")
