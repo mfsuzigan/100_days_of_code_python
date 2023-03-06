@@ -89,11 +89,11 @@ def play():
 
         if has_blackjack(pc_cards):
             game_is_over = True
-            game_outcome = -2
+            game_outcome = GameOutcome.PC_BLACKJACK_WIN
 
         elif has_blackjack(player_cards):
             game_is_over = True
-            game_outcome = 2
+            game_outcome = GameOutcome.PC_BLACKJACK_WIN
 
         else:
             print("\nHit (H) or stand (S)?")
