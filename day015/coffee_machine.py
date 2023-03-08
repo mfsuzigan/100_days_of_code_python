@@ -53,7 +53,7 @@ def resources_are_enough(drink):
 
         if machine_indicators[indicator] < drink_costs[indicator]:
             resources_are_enough = False
-            print(f"\n*** Sorry, there is not enough {indicator} ***")
+            print(f"\n*** ❌ Sorry, there is not enough {indicator} ***")
 
     return resources_are_enough
 
@@ -71,16 +71,16 @@ def money_was_processed(drink):
 
     if DRINK_COSTS[drink]["money"] > total_inserted_money:
         print(
-            f"\n*** Sorry, {format_indicator('money', total_inserted_money)} "
-            f"is not enough to buy a {drink} ({format_indicator('money', DRINK_COSTS[drink]['money'])}). ***")
-        print("\n ***Money refunded. ***")
+            f"\n*** ❌ Sorry, {format_indicator('money', total_inserted_money)} "
+            f"is not enough to buy a {drink} ({format_indicator('money', DRINK_COSTS[drink]['money'])}) ***")
+        print("\n *** Money refunded 🪙 ***")
 
     else:
         if total_inserted_money > DRINK_COSTS[drink]["money"]:
             change = total_inserted_money - DRINK_COSTS[drink]["money"]
-            print(f"\nHere is {format_indicator('money', change)} in change.")
+            print(f"\nHere is {format_indicator('money', change)} in change 🪙 .")
 
-        revenue += total_inserted_money
+        revenue += DRINK_COSTS[drink]["money"]
         money_was_processed = True
 
     return money_was_processed
@@ -89,15 +89,18 @@ def money_was_processed(drink):
 def print_report():
     print("\n")
 
-    for i in machine_indicators:
-        print(f"{i.title()}: {format_indicator(i, machine_indicators[i])}")
+    for indicator in machine_indicators:
+        print(f"{indicator.title()}: {format_indicator(indicator, machine_indicators[indicator])}")
 
     print(f"Revenue: {format_indicator('money', revenue)}\n")
 
 
 def make_drink(drink):
-    print("making drink")
 
+    for indicator in machine_indicators:
+        machine_indicators[indicator] -= DRINK_COSTS[drink][indicator]
+
+    print(f"\nHere is your {drink} ☕️. Enjoy!")
 
 def main():
 
@@ -116,7 +119,7 @@ def main():
                     make_drink(user_input)
 
             case _:
-                print("\n*** Invalid input ***")
+                print("\n*** ❌ Sorry, invalid input ***")
 
 
 if __name__ == "__main__":
