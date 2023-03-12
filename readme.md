@@ -22,4 +22,5 @@ ___
 ___
 - [Day 015](/day015): Local development environment setup & the coffee machine
 - [Day 016](/day016): Object-oriented programming
+- [Day 017](/day017): The quiz project & the benefits of OOP
 
