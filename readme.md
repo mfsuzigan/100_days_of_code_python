@@ -1,6 +1,7 @@
 # 100 Days of Code: Python
+![Files](https://img.shields.io/github/directory-file-count/mfsuzigan/100_days_of_code_python)
+![Lines of code](https://img.shields.io/tokei/lines/github/mfsuzigan/100_days_of_code_python)
 ![Last commit](https://img.shields.io/github/last-commit/mfsuzigan/100_days_of_code_python.svg)
-
 ### Beginner Level
 ___
 
