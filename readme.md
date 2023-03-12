@@ -13,7 +13,7 @@ ___
 - [Day 005](/day005): Python loops
 - [Day 006](/day006): Python functions & Karel
 - [Day 007](/day007): Hangman
-- [Day 008](/day008): Function parameters & Caesar ciper
+- [Day 008](/day008): Function parameters & Caesar cipher
 - [Day 009](/day009): Dictionaries, nesting and the secret auction
 - [Day 010](/day010): Functions with outputs
 - [Day 011](/day011): The blackjack capstone project
