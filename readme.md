@@ -2,6 +2,8 @@
 ![Files](https://img.shields.io/github/directory-file-count/mfsuzigan/100_days_of_code_python)
 ![Lines of code](https://img.shields.io/tokei/lines/github/mfsuzigan/100_days_of_code_python)
 ![Last commit](https://img.shields.io/github/last-commit/mfsuzigan/100_days_of_code_python.svg)
+
+As seen on [Udemy](https://www.udemy.com/course/100-days-of-code/).
 ### Beginner Level
 ___
 - [Day 001](/day001): Working with variables in Python to Manage Data
@@ -23,4 +25,5 @@ ___
 - [Day 015](/day015): Local development environment setup & the coffee machine
 - [Day 016](/day016): Object-oriented programming
 - [Day 017](/day017): The quiz project & the benefits of OOP
+- [Day 018](/day018): Turtle & graphical user interface (GUI) 
 
