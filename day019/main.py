@@ -6,6 +6,7 @@ from turtle import Turtle, Screen
 class RaceTurtle(Turtle):
     def __init__(self, color):
         super().__init__()
+        self.shape("turtle")
         self.color(color)
         self.x_final = 0
         self.finished_at = 0
@@ -43,7 +44,7 @@ def check_finish_line(turtle):
         print(f"\nRace over!\n\nThe winner 🏆 is: ✨ {winner.pencolor()} turtle ✨")
 
         if winner_bet == winner.pencolor():
-            print("\nYou've guessed it right! ✅")
+            print("\nYou guessed it right! ✅")
 
         else:
             print("\nBetter luck next time! ❌ ")
@@ -54,12 +55,15 @@ def main():
     screen.setup(width=640, height=480)
 
     for turtle in turf:
+        # evenly spacing turtles vertically
         start_y_pos = 210 - turf.index(turtle) * 70
-        turtle.setup(x_start=-310, y_start=start_y_pos, x_final=310)
+        # final x considering that turtle is a40x40 object
+        turtle.setup(x_start=-310, y_start=start_y_pos, x_final=290)
 
     global winner_bet
-    winner_bet = screen.textinput("Make your bet ☘️",
-                                  f"Which turtle will win the race? ({str.join(', ', [turtle.pencolor() for turtle in turf])})")
+    color_list = [turtle.pencolor() for turtle in turf]
+    winner_bet = str.lower(screen.textinput("Make your bet ☘️",
+                                            f"Which turtle will win the race? ({str.join(', ', color_list)})"))
     print(f"User's bet ☘️  for winning turtle is: {winner_bet}")
 
     for turtle in turf:
