@@ -38,5 +38,6 @@ ___
 | [Day 017](/day017) | The quiz project & the benefits of OOP                   | Quiz                |
 | [Day 018](/day018) | Turtle & graphical user interface (GUI)                  | Hirst Spot Painting |
 | [Day 019](/day019) | Instances, state and higher order functions              | Turtle Race         |
-| [Day 020](/day020) | Build the Snake Game part 1: Animation & Coordinates     | Snake Game          |
+| [Day 020](/day020) | Build the Snake Game part 1: animation & coordinates     | Snake Game          |
+| [Day 021](/day021) | Build the Snake Game part 2: inheritance & list slicing  | Snake Game          |
 
