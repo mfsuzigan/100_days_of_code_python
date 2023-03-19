@@ -40,10 +40,14 @@ class Snake:
     def setup_controls(self):
 
         for direction in Directions:
-            print(f"{direction.description} {direction.heading}")
-            self.screen.onkey(key=direction.description, fun=lambda d=direction.heading: self.head.setheading(d))
+            self.screen.onkey(key=direction.description, fun=lambda d=direction.heading: self.change_heading(d))
 
         self.screen.listen()
+
+    def change_heading(self, new_heading):
+
+        if (self.head.heading() - new_heading) not in [-180, 180]:
+            self.head.setheading(new_heading)
 
     def move(self):
         self.head.move()
