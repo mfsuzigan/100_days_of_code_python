@@ -1,6 +1,7 @@
 import time
 from turtle import Screen
 
+from scoreboard import Scoreboard
 from snake import Snake
 from snake_block import SnakeBlock
 from snake_food import SnakeFood
@@ -17,6 +18,7 @@ def main():
 
     snake = Snake(screen)
     food = SnakeFood(SCREEN_WIDTH, SCREEN_HEIGHT)
+    scoreboard = Scoreboard()
 
     while True:
         snake.move()
@@ -26,6 +28,7 @@ def main():
         if snake.head.distance(food) < 15:
             food.update_position()
             snake.add_block(SnakeBlock())
+            scoreboard.increment()
 
     screen.exitonclick()
 
