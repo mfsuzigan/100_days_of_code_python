@@ -7,18 +7,23 @@ class Snake:
 
     def __init__(self, screen: Screen):
         self.screen = screen
+        self.head = None
 
-        self.head = SnakeBlock(head=None)
-        body = SnakeBlock(head=self.head)
-
-        for _ in range(0, 8):
-            block = SnakeBlock(head=body)
-            body = block
+        self.add_block(SnakeBlock())
+        self.add_block(SnakeBlock())
+        self.add_block(SnakeBlock())
 
         self.update_controls()
 
     def add_block(self, block: SnakeBlock):
-        self.head.add_block(block)
+
+        if self.head is None:
+            self.head = block
+            self.head.setx(0)
+            self.head.sety(0)
+
+        else:
+            self.head.add_block_to_tail(block)
 
     def update_controls(self):
         headings_with_controls = {

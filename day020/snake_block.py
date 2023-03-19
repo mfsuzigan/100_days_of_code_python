@@ -2,26 +2,13 @@ from turtle import Turtle
 
 
 class SnakeBlock(Turtle):
-    def __init__(self, head=None):
+    def __init__(self):
         super().__init__()
         self.penup()
         self.shape("square")
+        self.color("white")
+        self.head = None
         self.tail = None
-
-        if head is None:
-            self.setx(0)
-            self.sety(0)
-            self.color("white")
-
-        else:
-            self.head = head
-            head.tail = self
-
-            self.shape(head.shape())
-            self.color(head.pencolor())
-
-            self.setx(self.head.xcor() - 20)
-            self.sety(self.head.ycor())
 
     def move(self):
         x_prev = self.xcor()
@@ -42,5 +29,12 @@ class SnakeBlock(Turtle):
         if self.tail is not None:
             self.tail.move_to_position(x_prev, y_prev)
 
-    def add_block(self, block):
-        pass
+    def add_block_to_tail(self, block):
+
+        if self.tail is None:
+            self.tail = block
+            block.setx(self.xcor() - 20)
+            block.sety(self.ycor())
+
+        else:
+            self.tail.add_block_to_tail(block)
