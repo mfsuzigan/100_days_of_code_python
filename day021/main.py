@@ -31,17 +31,23 @@ def main():
             snake.add_block(SnakeBlock())
             scoreboard.increment()
 
-        vertical_limit = SCREEN_WIDTH / 2 - 25
-        snake_hit_vertical_wall = snake.head.xcor() > vertical_limit or snake.head.xcor() < -vertical_limit
+        game_over = game_is_over(snake)
 
-        horizontal_limit = SCREEN_HEIGHT / 2 - 25
-        snake_hit_horizontal_wall = snake.head.ycor() > horizontal_limit or snake.head.ycor() < -horizontal_limit
-
-        if snake_hit_horizontal_wall or snake_hit_vertical_wall:
-            game_over = True
+        if game_over:
             scoreboard.game_over()
 
     screen.exitonclick()
+
+
+def game_is_over(snake: Snake):
+    vertical_limit = SCREEN_WIDTH / 2 - 25
+    snake_hit_vertical_wall = snake.head.xcor() > vertical_limit or snake.head.xcor() < -vertical_limit
+
+    horizontal_limit = SCREEN_HEIGHT / 2 - 25
+    snake_hit_horizontal_wall = snake.head.ycor() > horizontal_limit or snake.head.ycor() < -horizontal_limit
+
+    return snake_hit_horizontal_wall or snake_hit_vertical_wall or snake.has_collided_with_tail(
+        snake.head.tail.tail.tail)
 
 
 if __name__ == "__main__":

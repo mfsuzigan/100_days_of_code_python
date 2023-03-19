@@ -33,8 +33,10 @@ class Snake:
             self.head = block
             self.head.setx(0)
             self.head.sety(0)
+            print("Head added")
 
         else:
+            block.id += 1
             self.head.add_block_to_tail(block)
 
     def setup_controls(self):
@@ -53,5 +55,14 @@ class Snake:
         self.head.move()
         self.screen.update()
 
-    def print_heading(self):
-        print(f"Heading is {self.head.heading()}")
+    def has_collided_with_tail(self, block: SnakeBlock = None):
+
+        if block is None:
+            return False
+
+        elif self.head.distance(block) > 10:
+            return self.has_collided_with_tail(block.tail)
+
+        else:
+            print(f"Tail collision: block {block.id}, head distance {self.head.distance(block)}")
+            return True

@@ -9,6 +9,7 @@ class SnakeBlock(Turtle):
         self.color("white")
         self.head = None
         self.tail = None
+        self.id = 0
 
     def move(self):
         x_prev = self.xcor()
@@ -35,6 +36,8 @@ class SnakeBlock(Turtle):
             self.tail = block
             block.setx(self.xcor() - 20)
             block.sety(self.ycor())
+            print(f"Block {block.id} added")
 
         else:
+            block.id += 1
             self.tail.add_block_to_tail(block)
