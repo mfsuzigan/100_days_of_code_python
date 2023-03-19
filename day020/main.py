@@ -1,20 +1,24 @@
+import time
 from turtle import Screen
 
-from models.direction import Direction
-from models.snake import Snake
+from snake import Snake
 
 
 def main():
     screen = Screen()
     screen.screensize(600, 600)
     screen.bgcolor("black")
+    screen.tracer(0)
 
-    snake = Snake()
+    snake = Snake(screen)
 
     while True:
-        snake.move(Direction.FORWARD)
+        snake.move()
+        screen.update()
 
-    # screen.exitonclick()
+        time.sleep(0.1)
+
+    screen.exitonclick()
 
 
 if __name__ == "__main__":
