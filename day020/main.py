@@ -15,8 +15,7 @@ def main():
     while True:
         snake.move()
         screen.update()
-
-        time.sleep(0.1)
+        time.sleep(0.075)
 
     screen.exitonclick()
 

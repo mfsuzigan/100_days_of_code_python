@@ -10,7 +10,10 @@ class Snake:
 
         self.head = SnakeBlock(head=None)
         body = SnakeBlock(head=self.head)
-        tail = SnakeBlock(head=body)
+
+        for _ in range(0, 8):
+            block = SnakeBlock(head=body)
+            body = block
 
         self.update_controls()
 
@@ -33,16 +36,18 @@ class Snake:
 
     def move(self):
         self.head.move()
+        self.screen.update()
+        self.update_controls()
 
     def turn_right(self):
         self.head.right(90)
         self.print_heading()
-        self.update_controls()
+        self.move()
 
     def turn_left(self):
         self.head.left(90)
         self.print_heading()
-        self.update_controls()
+        self.move()
 
     def print_heading(self):
         print(f"Heading is {self.head.heading()}")
