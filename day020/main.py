@@ -3,10 +3,13 @@ from turtle import Screen
 
 from snake import Snake
 
+SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 600
+
 
 def main():
     screen = Screen()
-    screen.screensize(600, 600)
+    screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
     screen.bgcolor("black")
     screen.tracer(0)
 
@@ -15,7 +18,7 @@ def main():
     while True:
         snake.move()
         screen.update()
-        time.sleep(0.075)
+        time.sleep(0.1)
 
     screen.exitonclick()
 
