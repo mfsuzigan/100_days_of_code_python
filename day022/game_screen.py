@@ -5,6 +5,7 @@ class GameScreen(Turtle):
 
     def __init__(self, width, height, color, title):
         super().__init__()
+        self.hideturtle()
         self.height = height
         self.width = width
         self.screen.setup(width, height)

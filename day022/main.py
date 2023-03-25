@@ -7,7 +7,7 @@ SCREEN_HEIGHT = 600
 
 
 def main():
-    game_screen = GameScreen(SCREEN_WIDTH, SCREEN_HEIGHT, "gray", "Pong")
+    game_screen = GameScreen(SCREEN_WIDTH, SCREEN_HEIGHT, "black", "Pong")
     game_screen.screen.tracer(0)
 
     left_paddle = Paddle(size=Paddle.SIZE.NORMAL, control_up_key="w", control_down_key="s")
@@ -21,8 +21,8 @@ def main():
     ball = Ball()
 
     while True:
+        ball.move()
         game_screen.screen.update()
-        ball.goto(350, 250)
 
     game_screen.screen.exitonclick()
 
