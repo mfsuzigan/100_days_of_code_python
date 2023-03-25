@@ -1,5 +1,8 @@
 from turtle import Turtle
 
+from ball import Ball
+from paddle import Paddle
+
 
 class GameScreen(Turtle):
 
@@ -12,9 +15,13 @@ class GameScreen(Turtle):
         self.screen.bgcolor(color)
         self.screen.title(title)
 
-    def add_paddle(self, paddle):
+    def add_paddle(self, paddle: Paddle):
         max_paddle_y_cor = self.height / 2 - (paddle.size.width * 20 / 2) - 20
         paddle.set_vertical_bounds(max_paddle_y_cor)
+
+    def add_ball(self, ball: Ball):
+        max_ball_y_cor = self.height / 2
+        ball.set_vertical_bounds(max_ball_y_cor)
 
     def exit_on_click(self):
         self.screen.exitonclick()
