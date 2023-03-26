@@ -1,5 +1,5 @@
 from ball import Ball
-from game_screen import GameScreen
+from game_screen import PongGame
 from paddle import Paddle
 
 SCREEN_WIDTH = 800
@@ -7,35 +7,46 @@ SCREEN_HEIGHT = 600
 
 
 def main():
-    game_screen = GameScreen(SCREEN_WIDTH, SCREEN_HEIGHT, "black", "Pong")
-    game_screen.screen.tracer(0)
+    game = PongGame(SCREEN_WIDTH, SCREEN_HEIGHT, "black", "Pong")
+    game.screen.tracer(0)
 
-    left_paddle = Paddle(size=Paddle.SIZE.NORMAL, control_up_key="w", control_down_key="s")
-    left_paddle.goto(-350, 0)
-    game_screen.add_paddle(left_paddle)
-
-    right_paddle = Paddle(size=Paddle.SIZE.NORMAL)
+    right_paddle = Paddle(size=Paddle.Size.NORMAL)
     right_paddle.goto(350, 0)
-    game_screen.add_paddle(right_paddle)
+    game.add_paddle(right_paddle)
 
-    ball = Ball()
-    game_screen.add_ball(ball)
+    left_paddle = Paddle(size=Paddle.Size.NORMAL, control_up_key="w", control_down_key="s")
+    left_paddle.goto(-350, 0)
+    game.add_paddle(left_paddle)
+
+    ball = Ball(Ball.Speed.NORMAL)
+    game.add_ball(ball)
 
     while True:
         ball.move()
-        game_screen.screen.update()
+        game.screen.update()
 
-        if ball_has_horizontally_collided(ball):
+        if game.horizontal_collision_detected(ball):
+            print(game.get_info(ball))
             ball.bounce_vertically()
 
-    game_screen.screen.exitonclick()
+        for paddle in game.paddles:
+
+            if game.paddle_collision_detected(ball, paddle):
+                print(game.get_info(ball, paddle))
+                ball.bounce_horizontally()
+
+    game.exit_on_click()
 
 
-def ball_has_horizontally_collided(ball: Ball):
-    upper_collision_happened = ball.distance(ball.xcor(), ball.max_y_cor) < 15
-    lower_collision_happened = ball.distance(ball.xcor(), ball.min_y_cor) < 15
+def get_saved_bugged_game1(ball, right_paddle):
+    ball.goto(320.399, -40.40)
+    right_paddle.goto(350, -80)
+    ball.bounce_vertically()
 
-    return upper_collision_happened or lower_collision_happened
+
+def get_saved_bugged_game2(ball, right_paddle):
+    ball.goto(341.598, -209.199)
+    right_paddle.goto(350, -160)
 
 
 if __name__ == "__main__":

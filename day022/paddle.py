@@ -3,7 +3,7 @@ from turtle import Turtle
 
 
 class Paddle(Turtle):
-    class SIZE(Enum):
+    class Size(Enum):
         NORMAL = 5,
         SMALL = 3,
         LARGE = 8
@@ -11,11 +11,10 @@ class Paddle(Turtle):
         def __init__(self, width):
             self.width = width
 
-    def __init__(self, control_up_key="Up", control_down_key="Down", size=SIZE.NORMAL.width):
+    def __init__(self, control_up_key="Up", control_down_key="Down", size=Size.NORMAL.width):
         super().__init__()
         self.shape("square")
         self.color("white")
-        self.width = 20
         self.size = size
         self.shapesize(stretch_wid=size.width, stretch_len=1)
         self.penup()
