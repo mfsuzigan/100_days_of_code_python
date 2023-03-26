@@ -18,10 +18,11 @@ class Ball(Turtle):
         self.min_y_cor = 0
         self.max_y_cor = 0
         self.speed = speed
+        self.speed_gain = 1
 
     def move(self):
-        horizontal_increment = self.speed.value * self.horizontal_direction
-        vertical_increment = self.speed.value * self.vertical_direction
+        horizontal_increment = self.speed_gain * ( self.speed.value * self.horizontal_direction)
+        vertical_increment = self.speed_gain * (self.speed.value * self.vertical_direction)
         self.goto(self.xcor() + horizontal_increment, self.ycor() + vertical_increment)
 
     def bounce_vertically(self):
@@ -33,3 +34,6 @@ class Ball(Turtle):
     def set_vertical_bounds(self, max_ball_y_cor):
         self.max_y_cor = max_ball_y_cor
         self.min_y_cor = -max_ball_y_cor
+
+    def increase_speed(self, percentage):
+        self.speed_gain *= 1 + percentage/100
