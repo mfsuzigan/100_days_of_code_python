@@ -1,5 +1,5 @@
 from ball import Ball
-from game_screen import PongGame
+from pong_game import PongGame
 from paddle import Paddle
 
 SCREEN_WIDTH = 800
@@ -25,14 +25,14 @@ def main():
         ball.move()
         game.screen.update()
 
-        if game.horizontal_collision_detected(ball):
-            print(game.get_info(ball))
+        if game.horizontal_collision_detected():
+            print(game.get_info())
             ball.bounce_vertically()
 
         for paddle in game.paddles:
 
-            if game.paddle_collision_detected(ball, paddle):
-                print(game.get_info(ball, paddle))
+            if game.paddle_collision_detected(paddle):
+                print(game.get_info(paddle))
                 ball.bounce_horizontally()
 
     game.exit_on_click()
