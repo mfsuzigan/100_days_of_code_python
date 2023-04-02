@@ -1,10 +1,8 @@
 import time
 from turtle import Screen
+
+from car import Car
 from player import Player
-from car_manager import CarManager
-from scoreboard import Scoreboard
-
-
 
 
 def main():
@@ -14,11 +12,13 @@ def main():
     game_is_on = True
 
     player = Player()
+    car = Car(color="green", y_cor=150, speed=1)
 
     while game_is_on:
+        car.move()
         time.sleep(0.1)
         screen.update()
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
