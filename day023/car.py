@@ -24,3 +24,6 @@ class Car(Turtle):
         player_is_too_close = self.distance(player) < 30
 
         return player_is_in_front_of_car and player_is_too_close
+
+    def increase_speed(self, percentage):
+        self.speed *= 1 + (percentage / 100)

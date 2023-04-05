@@ -18,7 +18,11 @@ class Player(Turtle):
         self.screen.listen()
 
     def move(self):
-
         if self.ycor() != FINISH_LINE_Y:
             self.goto(self.xcor(), self.ycor() + MOVE_DISTANCE)
 
+    def has_leveled_up(self):
+        return self.ycor() >= FINISH_LINE_Y
+
+    def reset_position(self):
+        self.goto(STARTING_POSITION)

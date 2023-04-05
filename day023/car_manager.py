@@ -19,13 +19,14 @@ class CarManager:
         self.screen = Screen()
         self.cars = []
         self.lanes_y_cor = []
+        self.speed_level = 1
 
     def add_car(self):
         car = Car(color=random.choice(COLORS), speed=1, y_cor=random.choice(self.lanes_y_cor))
         self.cars.append(car)
 
     def setup_lanes(self, screen_height):
-        lanes_count = int(screen_height / LANE_WIDTH) - 1
+        lanes_count = int(screen_height / LANE_WIDTH) - 2
 
         for lane in range(1, lanes_count):
             lane_y_cor = -250 + (lane * LANE_WIDTH) - (LANE_WIDTH / 2)
@@ -40,3 +41,9 @@ class CarManager:
                 return CarManager.TrafficState.COLLISION
 
         return CarManager.TrafficState.NORMAL
+
+    def increase_traffic_speed(self, percentage):
+        self.speed_level *= 1 + percentage / 100
+
+        for car in self.cars:
+            car.increase_speed(percentage)
