@@ -16,7 +16,7 @@ def main():
 
     car_manager = CarManager()
     car_manager.setup_lanes(SCREEN_HEIGHT)
-    car_manager.start_traffic()
+    car_manager.start_traffic(player)
     screen.exitonclick()
 
 

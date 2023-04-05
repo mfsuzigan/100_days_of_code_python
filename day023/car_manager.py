@@ -30,13 +30,16 @@ class CarManager:
             lane_y_cor = -250 + (lane * LANE_WIDTH) - (LANE_WIDTH / 2)
             self.lanes_y_cor.append(lane_y_cor)
 
-    def start_traffic(self):
+    def start_traffic(self, player):
         time_counter = 0
 
         while True:
 
             for car in self.cars:
                 car.move()
+
+                if car.collision_detected(player):
+                    return
 
             new_car_timer = round(time_counter)
 
