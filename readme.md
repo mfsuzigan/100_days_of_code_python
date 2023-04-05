@@ -40,4 +40,5 @@ ___
 | [Day 020](/day020) | Build the Snake Game part 1: animation & coordinates     | Snake Game          |
 | [Day 021](/day021) | Build the Snake Game part 2: inheritance & list slicing  | Snake Game          |
 | [Day 022](/day022) | Build Pong: the famous arcade game                       | Pong                |
+| [Day 023](/day023) | The Turtle Crossing capstone project                     | Turtle Crossing     |
 
