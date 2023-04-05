@@ -11,14 +11,13 @@ def main():
     screen = Screen()
     screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
     screen.tracer(0)
-    game_is_on = True
 
     player = Player()
-    car_manager = CarManager(SCREEN_HEIGHT)
-    car_manager.add_car()
-    car_manager.add_car()
-    car_manager.add_car()
+
+    car_manager = CarManager()
+    car_manager.setup_lanes(SCREEN_HEIGHT)
     car_manager.start_traffic()
+    screen.exitonclick()
 
 
 if __name__ == "__main__":
