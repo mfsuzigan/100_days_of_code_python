@@ -44,8 +44,9 @@ def main():
 
             print_info(scoreboard, car_manager, screen_cycles_before_adding_car)
 
-        if new_cars_cycle_counter == screen_cycles_before_adding_car:
+        if new_cars_cycle_counter >= screen_cycles_before_adding_car:
             car_manager.add_car()
+            print("Car added")
             new_cars_cycle_counter = 0
 
         time.sleep(SCREEN_REFRESH_INTERVAL_SECONDS)
