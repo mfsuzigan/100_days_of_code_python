@@ -20,7 +20,7 @@ class Car(Turtle):
         self.goto(self.xcor() + x_increment, self.ycor())
 
     def collision_detected(self, player: Turtle):
-        player_is_in_front_of_car = player.ycor() > (self.ycor() - 20) and (player.ycor() < self.ycor() + 20)
+        player_is_in_front_of_car = (self.ycor() - 20) < player.ycor() < (self.ycor() + 20)
         player_is_too_close = self.distance(player) < 30
 
         return player_is_in_front_of_car and player_is_too_close
