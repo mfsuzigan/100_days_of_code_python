@@ -19,27 +19,25 @@ def main():
     snake = Snake(screen)
     food = SnakeFood(SCREEN_WIDTH, SCREEN_HEIGHT)
     scoreboard = Scoreboard()
-    game_over = False
 
-    while not game_over:
+    while True:
         snake.move()
         screen.update()
-        time.sleep(0.1)
+        time.sleep(0.2)
 
         if snake.head.distance(food) < 15:
             food.update_position()
             snake.add_block(SnakeBlock())
             scoreboard.increment()
 
-        game_over = game_is_over(snake)
+        if snake_is_dead(snake):
+            scoreboard.reset()
+            time.sleep(1)
+            snake.reset()
+            food.update_position()
 
-        if game_over:
-            scoreboard.game_over()
 
-    screen.exitonclick()
-
-
-def game_is_over(snake: Snake):
+def snake_is_dead(snake: Snake):
     vertical_limit = SCREEN_WIDTH / 2 - 25
     snake_hit_vertical_wall = snake.head.xcor() > vertical_limit or snake.head.xcor() < -vertical_limit
 

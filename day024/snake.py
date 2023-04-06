@@ -66,3 +66,21 @@ class Snake:
         else:
             print(f"Tail collision: block {block.id}, head distance {self.head.distance(block)}")
             return True
+
+    def reset(self):
+        block_counter = 0
+        block = self.head
+
+        while block is not None:
+            next_block = block.tail
+
+            if block_counter >= 3:
+                block.head.tail = None
+                block.head = None
+                block.hideturtle()
+
+            block = next_block
+            block_counter += 1
+
+        self.head.goto(0, 0)
+        self.change_heading(0)
