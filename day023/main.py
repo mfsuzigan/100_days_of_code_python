@@ -12,7 +12,7 @@ SCREEN_WIDTH = 600
 SCREEN_REFRESH_INTERVAL_SECONDS = 0.1
 STARTING_INTERVAL_BEFORE_ADDING_CARS_SECONDS = 4
 
-LEVEL_UP_SPEED_INCREASE_PERCENTAGE = 10
+LEVEL_UP_SPEED_INCREASE_PERCENTAGE = 15
 LEVEL_UP_ADDING_CARS_INTERVAL_DECREASE_PERCENTAGE = 50
 
 
@@ -46,7 +46,6 @@ def main():
 
         if new_cars_cycle_counter >= screen_cycles_before_adding_car:
             car_manager.add_car()
-            print("Car added")
             new_cars_cycle_counter = 0
 
         time.sleep(SCREEN_REFRESH_INTERVAL_SECONDS)
@@ -69,8 +68,8 @@ def get_screen_cycles_before_adding_car(player_level):
 def print_info(scoreboard, car_manager, screen_cycles_before_adding_car):
     print(
         f"Player Level {scoreboard.player_level}, "
-        f"speed level={car_manager.speed_level}, "
-        f"screen cycles before adding car={screen_cycles_before_adding_car}s")
+        f"speed level={car_manager.speed_level: .2f}, "
+        f"screen cycles before adding car={screen_cycles_before_adding_car}")
 
 
 if __name__ == "__main__":
