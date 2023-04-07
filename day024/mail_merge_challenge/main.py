@@ -11,8 +11,8 @@ def main():
     with open("Input/Names/invited_names.txt") as names_file:
         invited_names = [name.strip() for name in names_file.readlines()]
 
-    with open("Input/Letters/starting_letter.txt") as names_file:
-        starting_letter = names_file.read()
+    with open("Input/Letters/starting_letter.txt") as letter_template_file:
+        starting_letter = letter_template_file.read()
 
     for invited_name in invited_names:
         with open(f"Output/ReadyToSend/letter_for_{invited_name}.txt", "w") as letter_file:
