@@ -15,6 +15,7 @@ def main():
     screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
     screen.bgcolor("black")
     screen.tracer(0)
+    screen.onkeypress(fun=lambda: screen.bye(), key="Escape")
 
     snake = Snake(screen)
     food = SnakeFood(SCREEN_WIDTH, SCREEN_HEIGHT)
