@@ -27,20 +27,20 @@ def main():
                 feedback_message = "Sorry, that's wrong.\n\n"
 
             else:
-                show_state_name(guessed_state)
+                show_state_on_map(guessed_state)
                 states_guessed.append(guessed_state.state.item())
                 feedback_message = "Correct!\n\n"
 
-    show_remaining_states(states_data, states_guessed)
+    show_remaining_states_on_map(states_data, states_guessed)
     screen.exitonclick()
 
 
-def show_remaining_states(states_data, states_guessed):
+def show_remaining_states_on_map(states_data, states_guessed):
     for remaining_state in states_data[~states_data.state.isin(states_guessed)].state:
-        show_state_name(states_data[states_data.state == remaining_state], "red")
+        show_state_on_map(states_data[states_data.state == remaining_state], "red")
 
 
-def show_state_name(guessed_state, color="black"):
+def show_state_on_map(guessed_state, color="black"):
     state_name_on_map = Turtle()
     state_name_on_map.hideturtle()
     state_name_on_map.pencolor(color)
