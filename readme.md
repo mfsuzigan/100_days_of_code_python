@@ -45,4 +45,5 @@ ___
 | [Day 025](/day025) | Working with CSV data and the Pandas library             | Guess the State         |
 | [Day 026](/day026) | List comprehension and the NATO alphabet                 | NATO Alphabet converter |
 | [Day 027](/day027) | Tkinter, *args, **kwargs and creating GUI programs       | Miles to km converter   |
+| [Day 028](/day028) | Tkinter, dynamic typing and the pomodoro GUI application | Pomodoro Application    |
 
