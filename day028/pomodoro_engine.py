@@ -1,6 +1,6 @@
 from tkinter import Label
 
-TICK_TIME_MILLIS = 3
+TICK_TIME_MILLIS = 1000
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
