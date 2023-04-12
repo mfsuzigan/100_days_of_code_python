@@ -26,32 +26,43 @@ def main():
     image_canvas.create_image(175, 112, image=background_image)
 
     timer_text = image_canvas.create_text(175, 130, text="25:00", fill="white", font=(FONT_NAME, 35, "bold"))
-    timer = PomoTimer(tick_event=lambda: image_canvas.itemconfig(timer_text, text=timer.value))
 
-    start_button = Button(text="Start", command=timer.start)
-    start_button.grid(row=2, column=0)
-
-    reset_button = Button(text="Reset")
+    reset_button = Button(text="Reset",
+                          command=lambda: reset_pomodoro(engine, timer, phase_label, image_canvas, timer_text,
+                                                         checkmarks_label))
     reset_button.grid(row=2, column=2)
 
     checkmarks_label = Label(text="", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 35, "bold"))
     checkmarks_label.grid(row=3, column=1)
 
     engine = PomoEngine(work_minutes=WORK_MIN, short_break_minutes=SHORT_BREAK_MIN, long_break_minutes=LONG_BREAK_MIN)
+    timer = PomoTimer(tick_event=lambda: image_canvas.itemconfig(timer_text, text=timer.value))
 
-    run_pomodoro(engine, timer, phase_label, checkmarks_label)
+    start_button = Button(text="Start", command=lambda: run_pomodoro(engine, timer, phase_label, checkmarks_label))
+    start_button.grid(row=2, column=0)
 
     window.mainloop()
 
 
 def run_pomodoro(engine, timer: PomoTimer, phase_label, checkmarks_label):
     next_phase = engine.get_next_phase()
-    phase_label.config(text=next_phase["label"])
+    phase_label.config(text=next_phase["label"], fg=next_phase["title_color"])
     checkmarks_label.config(text=next_phase["checkmarks"])
 
     timer.minutes = next_phase["duration"]
     timer.end_event = lambda: run_pomodoro(engine, timer, phase_label, checkmarks_label)
+    timer.toggle_on()
     timer.tick()
+
+
+def reset_pomodoro(engine, timer, phase_label, image_canvas, timer_text, checkmarks_label):
+    timer.toggle_off()
+    engine.reset()
+    timer.reset()
+
+    image_canvas.itemconfig(timer_text, text="25:00")
+    phase_label.config(text="")
+    checkmarks_label.config(text="")
 
 
 if __name__ == "__main__":

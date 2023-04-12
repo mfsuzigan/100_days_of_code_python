@@ -1,6 +1,9 @@
 from tkinter import Label
 
 TICK_TIME_MILLIS = 3
+PINK = "#e2979c"
+RED = "#e7305b"
+GREEN = "#9bdeac"
 
 
 class PomoEngine:
@@ -11,19 +14,21 @@ class PomoEngine:
         self.long_break_minutes = long_break_minutes
 
         self.phases = {
-            0: {"label": "Work", "duration": self.work_minutes, "checkmarks": ""},
-            1: {"label": "Short Break 1", "duration": self.short_break_minutes, "checkmarks": ""},
+            0: {"label": "Work", "duration": self.work_minutes, "checkmarks": "", "title_color": GREEN},
+            1: {"label": "Short Break 1", "duration": self.short_break_minutes, "checkmarks": "", "title_color": PINK},
 
-            2: {"label": "Work", "duration": self.work_minutes, "checkmarks": "✓"},
-            3: {"label": "Short Break 2", "duration": self.short_break_minutes, "checkmarks": "✓"},
+            2: {"label": "Work", "duration": self.work_minutes, "checkmarks": "✓", "title_color": GREEN},
+            3: {"label": "Short Break 2", "duration": self.short_break_minutes, "checkmarks": "✓", "title_color": PINK},
 
-            4: {"label": "Work", "duration": self.work_minutes, "checkmarks": "✓✓"},
-            5: {"label": "Short Break 3", "duration": self.short_break_minutes, "checkmarks": "✓✓"},
+            4: {"label": "Work", "duration": self.work_minutes, "checkmarks": "✓✓", "title_color": GREEN},
+            5: {"label": "Short Break 3", "duration": self.short_break_minutes, "checkmarks": "✓✓",
+                "title_color": PINK},
 
-            6: {"label": "Work", "duration": self.work_minutes, "checkmarks": "✓✓✓"},
-            7: {"label": "Short Break 4", "duration": self.short_break_minutes, "checkmarks": "✓✓✓"},
+            6: {"label": "Work", "duration": self.work_minutes, "checkmarks": "✓✓✓", "title_color": GREEN},
+            7: {"label": "Short Break 4", "duration": self.short_break_minutes, "checkmarks": "✓✓✓",
+                "title_color": PINK},
 
-            8: {"label": "Longer Break", "duration": self.long_break_minutes, "checkmarks": "✓✓✓✓"}
+            8: {"label": "Longer Break", "duration": self.long_break_minutes, "checkmarks": "✓✓✓✓", "title_color": RED}
         }
 
         self.current_phase = -1
@@ -36,21 +41,25 @@ class PomoEngine:
 
         return self.phases[self.current_phase]
 
+    def reset(self):
+        self.current_phase = -1
+
 
 class PomoTimer(Label):
 
     def __init__(self, minutes: int = 0, tick_event=None, end_event=None):
         super().__init__()
+        self.is_on = False
         self.minutes = minutes
         self.seconds = 0
-        self.value = f"{self.minutes}:{self.seconds}"
         self.tick_event = tick_event
         self.end_event = end_event
-        self.is_running = False
+        self.value = ""
+        self.set_value()
 
     def tick(self):
 
-        if not self.is_running:
+        if not self.is_on:
             return
 
         if self.minutes == 0 and self.seconds == 0:
@@ -67,10 +76,20 @@ class PomoTimer(Label):
                 if self.minutes > 0:
                     self.minutes -= 1
 
-            self.value = f"{str(self.minutes).zfill(2)}:{str(self.seconds).zfill(2)}"
+            self.set_value()
             self.tick_event()
             self.after(ms=TICK_TIME_MILLIS, func=self.tick)
 
-    def start(self):
-        self.is_running = True
-        self.after(ms=TICK_TIME_MILLIS, func=self.tick)
+    def reset(self):
+        self.minutes = 0
+        self.seconds = 0
+        self.set_value()
+
+    def set_value(self):
+        self.value = f"{str(self.minutes).zfill(2)}:{str(self.seconds).zfill(2)}"
+
+    def toggle_on(self):
+        self.is_on = True
+
+    def toggle_off(self):
+        self.is_on = False
