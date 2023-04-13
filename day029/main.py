@@ -1,6 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
 
+import pypassword_generator
+
+LETTERS_AMOUNT_FOR_GENERATED_PASSWORD = 5
+DIGITS_AMOUNT_FOR_GENERATED_PASSWORD = 5
+SYMBOLS_AMOUNT_FOR_GENERATED_PASSWORD = 3
+
 
 def main():
     window = Tk()
@@ -26,8 +32,8 @@ def main():
     password_entry = Entry(width=25, name="password")
     password_entry.grid(row=3, column=1)
 
-    generate_pwd_button = Button(text="Generate Password")
-    generate_pwd_button.grid(row=3, column=2)
+    generate_password_button = Button(text="Generate Password", command=lambda: generate_password(password_entry))
+    generate_password_button.grid(row=3, column=2)
 
     add_button = Button(text="Add",
                         command=lambda: save_data([website_entry, email_entry, password_entry]))
@@ -72,6 +78,14 @@ def save_data(entries):
 
 def clear_entry(entry):
     entry.delete(0, END)
+
+
+def generate_password(password_entry):
+    generated_password = pypassword_generator.generate_password(LETTERS_AMOUNT_FOR_GENERATED_PASSWORD,
+                                                                DIGITS_AMOUNT_FOR_GENERATED_PASSWORD,
+                                                                SYMBOLS_AMOUNT_FOR_GENERATED_PASSWORD)
+    password_entry.delete(0, END)
+    password_entry.insert(0, generated_password)
 
 
 if __name__ == "__main__":
