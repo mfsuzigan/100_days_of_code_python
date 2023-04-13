@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 
+import pyperclip
+
 import pypassword_generator
 
 LETTERS_AMOUNT_FOR_GENERATED_PASSWORD = 5
@@ -12,6 +14,7 @@ def main():
     window = Tk()
     window.title("Password Manager")
     window.config(padx=20, pady=20)
+    window.resizable(False, False)
 
     image_canvas = Canvas(width=200, height=200)
     background_image = PhotoImage(file="logo.png")
@@ -32,7 +35,8 @@ def main():
     password_entry = Entry(width=25, name="password")
     password_entry.grid(row=3, column=1)
 
-    generate_password_button = Button(text="Generate Password", command=lambda: generate_password(password_entry))
+    generate_password_button = Button(text="Generate Password",
+                                      command=lambda: generate_password(password_entry, generate_password_button))
     generate_password_button.grid(row=3, column=2)
 
     add_button = Button(text="Add",
@@ -80,12 +84,21 @@ def clear_entry(entry):
     entry.delete(0, END)
 
 
-def generate_password(password_entry):
+def generate_password(password_entry, password_button):
     generated_password = pypassword_generator.generate_password(LETTERS_AMOUNT_FOR_GENERATED_PASSWORD,
                                                                 DIGITS_AMOUNT_FOR_GENERATED_PASSWORD,
                                                                 SYMBOLS_AMOUNT_FOR_GENERATED_PASSWORD)
     password_entry.delete(0, END)
     password_entry.insert(0, generated_password)
+
+    try:
+        # check requirements for Linux: https://pyperclip.readthedocs.io/en/latest/index.html#not-implemented-error
+        pyperclip.copy(generated_password)
+        password_button.config(text="Copied to clipboard!")
+        password_button.after(ms=1000, func=lambda: password_button.config(text="Generate Password"))
+
+    except pyperclip.PyperclipException:
+        pass
 
 
 if __name__ == "__main__":
