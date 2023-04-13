@@ -30,20 +30,21 @@ ___
 
 ___
 
-| Day                | Description                                              | Project                 |
-|--------------------|----------------------------------------------------------|-------------------------|
-| [Day 015](/day015) | Local development environment setup & the coffee machine | Coffee Machine          |
-| [Day 016](/day016) | Object-oriented programming                              | OOP Coffee Machine      |
-| [Day 017](/day017) | The quiz project & the benefits of OOP                   | Quiz                    |
-| [Day 018](/day018) | Turtle & graphical user interface (GUI)                  | Hirst Spot Painting     |
-| [Day 019](/day019) | Instances, state and higher order functions              | Turtle Race             |
-| [Day 020](/day020) | Build the Snake Game part 1: animation & coordinates     | Snake Game              |
-| [Day 021](/day021) | Build the Snake Game part 2: inheritance & list slicing  | Snake Game              |
-| [Day 022](/day022) | Build Pong: the famous arcade game                       | Pong                    |
-| [Day 023](/day023) | The Turtle Crossing capstone project                     | Turtle Crossing         |
-| [Day 024](/day024) | Files, directories and paths                             | Snake Game              |
-| [Day 025](/day025) | Working with CSV data and the Pandas library             | Guess the State         |
-| [Day 026](/day026) | List comprehension and the NATO alphabet                 | NATO Alphabet converter |
-| [Day 027](/day027) | Tkinter, *args, **kwargs and creating GUI programs       | Miles to km converter   |
-| [Day 028](/day028) | Tkinter, dynamic typing and the pomodoro GUI application | Pomodoro Application    |
+| Day                | Description                                              | Project                  |
+|--------------------|----------------------------------------------------------|--------------------------|
+| [Day 015](/day015) | Local development environment setup & the coffee machine | Coffee Machine           |
+| [Day 016](/day016) | Object-oriented programming                              | OOP Coffee Machine       |
+| [Day 017](/day017) | The quiz project & the benefits of OOP                   | Quiz                     |
+| [Day 018](/day018) | Turtle & graphical user interface (GUI)                  | Hirst Spot Painting      |
+| [Day 019](/day019) | Instances, state and higher order functions              | Turtle Race              |
+| [Day 020](/day020) | Build the Snake Game part 1: animation & coordinates     | Snake Game               |
+| [Day 021](/day021) | Build the Snake Game part 2: inheritance & list slicing  | Snake Game               |
+| [Day 022](/day022) | Build Pong: the famous arcade game                       | Pong                     |
+| [Day 023](/day023) | The Turtle Crossing capstone project                     | Turtle Crossing          |
+| [Day 024](/day024) | Files, directories and paths                             | Snake Game               |
+| [Day 025](/day025) | Working with CSV data and the Pandas library             | Guess the State          |
+| [Day 026](/day026) | List comprehension and the NATO alphabet                 | NATO Alphabet converter  |
+| [Day 027](/day027) | Tkinter, *args, **kwargs and creating GUI programs       | Miles to km converter    |
+| [Day 028](/day028) | Tkinter, dynamic typing and the pomodoro GUI application | Pomodoro Application     |
+| [Day 029](/day029) | Building a password manager GUI app with Tkinter         | Password Generator (GUI) |
 
