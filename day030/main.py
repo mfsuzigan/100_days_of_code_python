@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+import json
 
 import pyperclip
 
@@ -30,7 +31,7 @@ def main():
     website_entry.grid(row=2, column=1, columnspan=2)
     website_entry.focus()
 
-    email_entry = Entry(width=45, name="e-mail/username")
+    email_entry = Entry(width=45, name="username")
     email_entry.grid(row=3, column=1, columnspan=2)
 
     password_entry = Entry(width=25, name="password")
@@ -40,7 +41,7 @@ def main():
                                       command=lambda: generate_password(password_entry, generate_password_button))
     generate_password_button.grid(row=4, column=2)
 
-    add_button = Button(text="Add",
+    add_button = Button(text="Save password",
                         command=lambda: save_data([website_entry, email_entry, password_entry]))
     add_button.grid(row=5, column=1, columnspan=2)
     add_button.config(width=42)
@@ -67,13 +68,30 @@ def save_data(entries):
                             message=f"Please check for invalid values in these fields:\n\n{invalid_entries}")
 
     else:
+        data = {}
 
-        with open("data.txt", "a") as file:
-            data_to_file = "|".join([f"{entry.winfo_name()}={entry.get()}" for entry in entries]) + "\n"
-            file.write(data_to_file)
+        try:
+            with open("data.json", "r") as file:
+                data = json.load(file)
 
-            for entry in entries:
-                clear_entry(entry)
+        except FileNotFoundError:
+            print("Data file not found, creating new one")
+
+        data.update(format_password_data(entries))
+
+        with open("data.json", "w") as file:
+            json.dump(data, file, indent=4)
+
+        for entry in entries:
+            clear_entry(entry)
+
+
+def format_password_data(entries):
+    raw_data = {entry.winfo_name(): entry.get() for entry in entries}
+    return {
+        raw_data["website"]:
+            {key: value for (key, value) in raw_data.items() if key != "website"}
+    }
 
 
 def clear_entry(entry):
