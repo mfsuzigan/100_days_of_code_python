@@ -1,50 +1,48 @@
 from tkinter import *
-from tkinter import messagebox
 import json
-
 import pyperclip
-
 import pypassword_generator
 
 LETTERS_AMOUNT_FOR_GENERATED_PASSWORD = 5
 DIGITS_AMOUNT_FOR_GENERATED_PASSWORD = 5
 SYMBOLS_AMOUNT_FOR_GENERATED_PASSWORD = 3
 
+window = Tk()
+canvas = Canvas(width=240, height=200)
+canvas_message = canvas.create_text(148, 180, text="")
+
 
 def main():
-    window = Tk()
     window.title("Password Manager")
     window.config(padx=20, pady=40)
     window.resizable(False, False)
 
-    image_canvas = Canvas(width=200, height=200)
     background_image = PhotoImage(file="logo.png")
-    image_canvas.create_image(135, 80, image=background_image)
-    image_canvas.create_text(135, 180, text="")
-    image_canvas.grid(row=0, column=1)
+    canvas.create_image(148, 80, image=background_image)
+    canvas.grid(row=0, column=1)
 
     Label(text="Website:").grid(row=2, column=0)
     Label(text="Email/Username:").grid(row=3, column=0)
     Label(text="Password:").grid(row=4, column=0)
 
-    website_entry = Entry(width=45, name="website")
+    website_entry = Entry(width=49, name="website")
     website_entry.grid(row=2, column=1, columnspan=2)
     website_entry.focus()
 
-    email_entry = Entry(width=45, name="username")
-    email_entry.grid(row=3, column=1, columnspan=2)
+    username_entry = Entry(width=49, name="username")
+    username_entry.grid(row=3, column=1, columnspan=2)
 
-    password_entry = Entry(width=25, name="password")
-    password_entry.grid(row=4, column=1)
+    password_entry = Entry(name="password", width=30)
+    password_entry.grid(row=4, column=1, sticky="E")
 
     generate_password_button = Button(text="Generate Password",
-                                      command=lambda: generate_password(password_entry, generate_password_button))
+                                      command=lambda: generate_password(password_entry))
     generate_password_button.grid(row=4, column=2)
 
-    add_button = Button(text="Save password",
-                        command=lambda: save_data([website_entry, email_entry, password_entry]))
-    add_button.grid(row=5, column=1, columnspan=2)
-    add_button.config(width=42)
+    save_button = Button(text="Save password",
+                         command=lambda: save_data([website_entry, username_entry, password_entry]))
+    save_button.grid(row=5, column=1, columnspan=2)
+    save_button.config(width=47)
 
     window.mainloop()
 
@@ -63,9 +61,7 @@ def save_data(entries):
                        not entry_is_valid]
 
     if len(invalid_entries) > 0:
-        invalid_entries = "\n".join(invalid_entries)
-        messagebox.showinfo(title="Invalid values",
-                            message=f"Please check for invalid values in these fields:\n\n{invalid_entries}")
+        show_message("All fields required")
 
     else:
         data = {}
@@ -81,6 +77,8 @@ def save_data(entries):
 
         with open("data.json", "w") as file:
             json.dump(data, file, indent=4)
+
+        show_message("Password saved!")
 
         for entry in entries:
             clear_entry(entry)
@@ -98,7 +96,15 @@ def clear_entry(entry):
     entry.delete(0, END)
 
 
-def generate_password(password_entry, password_button):
+def show_message(message, flashing=True):
+    message_before = canvas.itemcget(canvas_message, "text")
+    canvas.itemconfig(canvas_message, text=message)
+
+    if flashing:
+        canvas.after(2000, func=lambda: show_message(message_before, flashing=False))
+
+
+def generate_password(password_entry):
     generated_password = pypassword_generator.generate_password(LETTERS_AMOUNT_FOR_GENERATED_PASSWORD,
                                                                 DIGITS_AMOUNT_FOR_GENERATED_PASSWORD,
                                                                 SYMBOLS_AMOUNT_FOR_GENERATED_PASSWORD)
@@ -108,8 +114,7 @@ def generate_password(password_entry, password_button):
     try:
         # check requirements for Linux: https://pyperclip.readthedocs.io/en/latest/index.html#not-implemented-error
         pyperclip.copy(generated_password)
-        password_button.config(text="Copied to clipboard!")
-        password_button.after(ms=1000, func=lambda: password_button.config(text="Generate Password"))
+        show_message("Password copied to clipboard!")
 
     except pyperclip.PyperclipException:
         pass
