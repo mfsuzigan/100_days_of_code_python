@@ -52,6 +52,6 @@ ___
 
 ### Intermediate+ Level
 
-| Day                | Description                                              | Project        |
-|--------------------|----------------------------------------------------------|----------------|
-| [Day 032](/day032) | Local development environment setup & the coffee machine | Coffee Machine |
+| Day                | Description                                     | Project         |
+|--------------------|-------------------------------------------------|-----------------|
+| [Day 032](/day032) | Send e-mail (smtplib) & manage dates (datetime) | Birthday Wisher |
