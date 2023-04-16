@@ -48,4 +48,5 @@ ___
 | [Day 028](/day028) | Tkinter, dynamic typing and the pomodoro GUI application | Pomodoro Application     |
 | [Day 029](/day029) | Building a password manager GUI app with Tkinter         | Password Generator (GUI) |
 | [Day 030](/day030) | Errors, exceptions and JSON data: improving the password | Password Generator (GUI) |
+| [Day 031](/day031) | Flash card app capstone project                          | Flash card app           |
 
