@@ -50,3 +50,8 @@ ___
 | [Day 030](/day030) | Errors, exceptions and JSON data: improving the password | Password Generator (GUI) |
 | [Day 031](/day031) | Flash card app capstone project                          | Flash card app           |
 
+### Intermediate+ Level
+
+| Day                | Description                                              | Project        |
+|--------------------|----------------------------------------------------------|----------------|
+| [Day 032](/day032) | Local development environment setup & the coffee machine | Coffee Machine |
