@@ -84,8 +84,8 @@ def load_words():
 
 
 def right_button_command(canvas_title_text, canvas_word_text):
-    show_new_word(canvas_title_text, canvas_word_text)
     mark_word_as_known(canvas.itemcget(canvas_word_text, "text"))
+    show_new_word(canvas_title_text, canvas_word_text)
 
 
 def mark_word_as_known(word):
@@ -97,7 +97,11 @@ def mark_word_as_known(word):
     try:
         with open(words_file_path, "r") as file:
             words_to_learn = pandas.read_csv(file)
-            words_to_learn[words_to_learn[foreign_language] != word].to_csv(words_to_learn_file_path, index=False)
+            words_to_learn = words_to_learn[words_to_learn[foreign_language] != word]
+            words_to_learn.to_csv(words_to_learn_file_path, index=False)
+
+            global words_data
+            words_data = words_to_learn.to_dict(orient="records")
 
     except FileNotFoundError:
         pass
