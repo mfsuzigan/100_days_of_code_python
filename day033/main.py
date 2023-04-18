@@ -1,11 +1,13 @@
 import argparse
 import datetime
 import smtplib
-
 import pytz
 import requests as requests
+import time
 
 from lxml import html
+
+SLEEP_TIME_SECONDS = 60 * 2
 
 
 def get_location():
@@ -68,8 +70,7 @@ def get_args():
     return arg_parser.parse_args()
 
 
-def send_email():
-    args = get_args()
+def send_email(args):
     message = "Subject:Look up for the ISS!!\n"
     message += "Greetings," \
                "\nWe have determined that you should be able to see the Internation Space Station this night!" \
@@ -84,32 +85,38 @@ def send_email():
 
 
 def main():
+    args = get_args()
     location = get_location()
 
     print(
         f"\nIt looks like you're in the city of {location['city']}, {location['country']} "
         f"({location['latitude']} {location['longitude']}) 🌎")
 
-    is_daytime = check_daytime(location['latitude'], location['longitude'])
+    while True:
 
-    if is_daytime:
-        print("It's currently daytime there ☀️")
-    else:
-        print("It's currently nighttime there 🌙")
+        is_daytime = check_daytime(location['latitude'], location['longitude'])
 
-    is_iss_near = check_iss_near(location["latitude"], location["longitude"])
+        if is_daytime:
+            print("It's currently daytime there ☀️")
+        else:
+            print("It's currently nighttime there 🌙")
 
-    if is_iss_near:
-        print("The International Space Station is near! 🛰")
-    else:
-        print("Unfortunately, the International Space Station is not near ❌")
+        is_iss_near = check_iss_near(location["latitude"], location["longitude"])
 
-    if is_daytime and is_iss_near:
-        print("\nSince it's night and the ISS is near, sending heads-up e-mail\n")
-        send_email()
-        print("Done")
-    else:
-        print("\nIt's not possible to see the ISS at the time.\n")
+        if is_iss_near:
+            print("The International Space Station is near! 🛰")
+        else:
+            print("Unfortunately, the International Space Station is not near ❌")
+
+        if is_daytime and is_iss_near:
+            print("\nSince it's night and the ISS is near, sending heads-up e-mail\n")
+            send_email(args)
+            print("Done")
+        else:
+            print("\nIt's not possible to see the ISS at the time.\n")
+
+        print("Sleeping now...")
+        time.sleep(SLEEP_TIME_SECONDS)
 
 
 if __name__ == "__main__":
