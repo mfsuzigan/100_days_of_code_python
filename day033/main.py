@@ -93,29 +93,32 @@ def main():
         f"({location['latitude']} {location['longitude']}) 🌎")
 
     while True:
-
         is_daytime = check_daytime(location['latitude'], location['longitude'])
+        iss_sight_successful = False
 
         if is_daytime:
             print("It's currently daytime there ☀️")
+
         else:
             print("It's currently nighttime there 🌙")
+            is_iss_near = check_iss_near(location["latitude"], location["longitude"])
 
-        is_iss_near = check_iss_near(location["latitude"], location["longitude"])
+            if is_iss_near:
+                print("The International Space Station is near! 🛰")
+                print("\nSending heads-up e-mail...\n")
 
-        if is_iss_near:
-            print("The International Space Station is near! 🛰")
-        else:
-            print("Unfortunately, the International Space Station is not near ❌")
+                send_email(args)
+                
+                print("Done")
+                iss_sight_successful = True
 
-        if is_daytime and is_iss_near:
-            print("\nSince it's night and the ISS is near, sending heads-up e-mail\n")
-            send_email(args)
-            print("Done")
-        else:
+            else:
+                print("Unfortunately, the International Space Station is not near ❌")
+
+        if not iss_sight_successful:
             print("\nIt's not possible to see the ISS at the time.\n")
 
-        print("Sleeping now...")
+        print("Sleeping now...\n")
         time.sleep(SLEEP_TIME_SECONDS)
 
 
