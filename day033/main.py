@@ -62,10 +62,10 @@ def check_iss_near(latitude, longitude):
 
 def get_args():
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("--from-mail", "-f", required=True, help="Sender's email")
+    arg_parser.add_argument("--from-email", "-f", required=True, help="Sender's email")
     arg_parser.add_argument("--password", "-p", required=True, help="Password for sender's email")
     arg_parser.add_argument("--smtp", "-s", required=True, help="Sender's SMTP server")
-    arg_parser.add_argument("--to-mail", "-t", required=True, help="Recipient's email")
+    arg_parser.add_argument("--to-email", "-t", required=True, help="Recipient's email")
 
     return arg_parser.parse_args()
 
@@ -80,8 +80,8 @@ def send_email(args):
 
     with smtplib.SMTP(args.smtp, 587) as smtp_connection:
         smtp_connection.starttls()
-        smtp_connection.login(user=args.from_mail, password=args.password)
-        smtp_connection.sendmail(from_addr=args.from_mail, to_addrs=args.to_email, msg=message)
+        smtp_connection.login(user=args.from_email, password=args.password)
+        smtp_connection.sendmail(from_addr=args.from_email, to_addrs=args.to_email, msg=message)
 
 
 def main():
@@ -108,7 +108,7 @@ def main():
                 print("\nSending heads-up e-mail...\n")
 
                 send_email(args)
-                
+
                 print("Done")
                 iss_sight_successful = True
 
