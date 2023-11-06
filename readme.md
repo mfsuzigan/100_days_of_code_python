@@ -52,12 +52,12 @@ ___
 
 ### Intermediate+ Level
 
-| Day                | Description                                              | Project               |
-|--------------------|----------------------------------------------------------|-----------------------|
-| [Day 032](/day032) | Send e-mail (smtplib) & manage dates (datetime)          | Birthday Wisher       |
-| [Day 033](/day033) | API endpoints and API parameters - ISS overhead notifier | ISS Overhead Notifier |
-| [Day 034](/day034) | API practice - Creating a GUI quiz app                   | GUI Quiz              |
-| [Day 035](/day035) | Authentication & environment variables: send SMS         | SMS Rain Alert        |
-| [Day 036](/day036) | Stock trading news alert project                         | Stock News Alert      |
-| [Day 037](/day037) | Habit tracking project: API post requests & headers      | Habit Tracker         |
-| [Day 038](/day038) | Workout tracking using Google Sheets                     | Workout Tracker       |
+| Day                | Description                                                        | Project               |
+|--------------------|--------------------------------------------------------------------|-----------------------|
+| [Day 032](/day032) | Send e-mail (smtplib) & manage dates (datetime)                    | Birthday Wisher       |
+| [Day 033](/day033) | API endpoints and API parameters - ISS overhead notifier           | ISS Overhead Notifier |
+| [Day 034](/day034) | API practice - Creating a GUI quiz app                             | GUI Quiz              |
+| [Day 035](/day035) | Authentication & environment variables: send SMS                   | SMS Rain Alert        |
+| [Day 036](/day036) | Stock trading news alert project                                   | Stock News Alert      |
+| [Day 037](/day037) | Habit tracking project: API post requests & headers                | Habit Tracker         |
+| [Day 038](/day038) | Workout tracking using natural language processing & Google Sheets | Workout Tracker       |
