@@ -11,9 +11,9 @@ def get_pressed_key():
     return getch()
 
 
-def get_configs(required_configs_set: set):
+def get_configs(required_configs_set: set, path: str = None):
     try:
-        with open("configurations.ini") as configurations_file:
+        with open(f"{path + '/' if path else ''}configurations.ini") as configurations_file:
             configs = {key: value for (key, value) in
                        [line.strip().split("=") for line in configurations_file.readlines()]}
 

@@ -1,17 +1,22 @@
-import requests
+import os
+import sys
 
-import pyutils.pyutils
-from day038.workout import Workout
+import requests
+from workout import Workout
+
+sys.path.append(f"{os.path.dirname(__file__)}/..")
+from pyutils.pyutils import get_configs
 
 configs = {}
 
 
 def main():
     global configs
-    configs = pyutils.pyutils.get_configs(
+    configs = get_configs(
         required_configs_set={"NUTRITIONIX_API_ENDPOINT", "NUTRITIONIX_APPLICATION_ID",
                               "NUTRITIONIX_APPLICATION_KEY",
-                              "SHEETY_SHEET_ENDPOINT", "SHEETY_ENDPOINT_AUTH_TOKEN"})
+                              "SHEETY_SHEET_ENDPOINT", "SHEETY_ENDPOINT_AUTH_TOKEN"},
+        path=f"{os.path.dirname(__file__)}")
 
     query = input("Tell me the exercises you did: ")
 
