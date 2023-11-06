@@ -1,10 +1,15 @@
+import datetime
+
+
 class Workout:
 
     def __init__(self, exercise, duration=float, calories=float):
-        self.date = ""
-        self.time = ""
+        now = datetime.datetime.now()
+
+        self.date = now.strftime("%Y-%m-%d")
+        self.time = now.strftime("%H:%M:%S")
         self.exercise = exercise
-        self.duration_min = duration
+        self.duration_min = str(datetime.timedelta(minutes=duration))
         self.calories = calories
 
     @staticmethod
