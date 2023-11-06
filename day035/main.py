@@ -1,31 +1,17 @@
-from twilio.base.exceptions import TwilioRestException
-from twilio.rest import Client
 import datetime
 import logging
-
 import pytz
 import requests
+from twilio.base.exceptions import TwilioRestException
+from twilio.rest import Client
+
+from pyutils import pyutils
 
 THREE_HOURS_PERIODS_TO_EXAMINE = 3
 OPENWEATHER_FORECAST_ENDPOINT = "https://api.openweathermap.org/data/2.5/forecast"
-
-
-def get_configs():
-    required_configs = ["WEATHER_API_KEY", "TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "SENDER_PHONE", "RECIPIENT_PHONE",
-                        "LOCATION_LATITUDE", "LOCATION_LONGITUDE"]
-
-    try:
-        with open("configurations.ini") as configurations_file:
-            configs = {key: value for (key, value) in
-                       [line.strip().split("=") for line in configurations_file.readlines()]}
-
-    except FileNotFoundError:
-        logging.exception("Error reading configuration files")
-
-    if not set(required_configs).issubset(configs):
-        raise Exception(f"One or more configurations not found in configurations.ini: {required_configs}")
-
-    return configs
+REQUIRED_CONFIGURATION_KEYS = {"WEATHER_API_KEY", "TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "SENDER_PHONE",
+                               "RECIPIENT_PHONE",
+                               "LOCATION_LATITUDE", "LOCATION_LONGITUDE"}
 
 
 def send_sms(configs, forecast_details):
@@ -45,7 +31,7 @@ def send_sms(configs, forecast_details):
 
 
 def main():
-    configs = get_configs()
+    configs = pyutils.get_configs(REQUIRED_CONFIGURATION_KEYS)
 
     forecast = get_forecast(configs)
     rain_is_expected = {forecast['rain_is_expected']}
