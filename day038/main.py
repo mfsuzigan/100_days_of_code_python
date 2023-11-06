@@ -21,10 +21,11 @@ def main():
     query = input("Tell me the exercises you did: ")
 
     for exercise in get_exercise_information(query)["exercises"]:
-        print(exercise)
         workout = Workout.from_json(exercise)
-        print(workout.duration_min)
+        print(f"Recording exercise: {workout.exercise} (duration {workout.duration_min})")
         save_to_sheet(workout)
+
+    print("Done!")
 
 
 def save_to_sheet(workout):
@@ -34,7 +35,7 @@ def save_to_sheet(workout):
             "time": f"{workout.time}",
             "exercise": f"{workout.exercise}",
             "duration": workout.duration_min,
-            "calories": workout.calories
+            "calories (kcal)": workout.calories
         }
     }
 
