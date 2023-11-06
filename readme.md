@@ -60,3 +60,4 @@ ___
 | [Day 035](/day035) | Authentication & environment variables: send SMS         | SMS Rain Alert        |
 | [Day 036](/day036) | Stock trading news alert project                         | Stock News Alert      |
 | [Day 037](/day037) | Habit tracking project: API post requests & headers      | Habit Tracker         |
+| [Day 038](/day038) | Workout tracking using Google Sheets                     | Workout Tracker       |
