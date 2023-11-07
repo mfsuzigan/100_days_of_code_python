@@ -61,3 +61,4 @@ ___
 | [Day 036](/day036) | Stock trading news alert project                                   | Stock News Alert      |
 | [Day 037](/day037) | Habit tracking project: API post requests & headers                | Habit Tracker         |
 | [Day 038](/day038) | Workout tracking using natural language processing & Google Sheets | Workout Tracker       |
+| [Day 039](/day039) | Capstone Project: Flight Deal Finder part 1                        | Flight Deal Finder    |
