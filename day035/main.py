@@ -1,11 +1,12 @@
 import datetime
-import logging
+import os
+import sys
 import pytz
 import requests
-from twilio.base.exceptions import TwilioRestException
-from twilio.rest import Client
 
-from pyutils import pyutils
+sys.path.append(f"{os.path.dirname(__file__)}/..")
+from pyutils.pyutils import get_configs
+from pyutils.pyutils import send_twilio_sms
 
 THREE_HOURS_PERIODS_TO_EXAMINE = 3
 OPENWEATHER_FORECAST_ENDPOINT = "https://api.openweathermap.org/data/2.5/forecast"
@@ -14,24 +15,8 @@ REQUIRED_CONFIGURATION_KEYS = {"WEATHER_API_KEY", "TWILIO_ACCOUNT_SID", "TWILIO_
                                "LOCATION_LATITUDE", "LOCATION_LONGITUDE"}
 
 
-def send_sms(configs, forecast_details):
-    client = Client(configs["TWILIO_ACCOUNT_SID"], configs["TWILIO_AUTH_TOKEN"])
-    forecast_details = str.join("\n ", forecast_details)
-
-    try:
-        message = client.messages.create(
-            body=f"Rain PyAlert\n{forecast_details}",
-            from_=configs["SENDER_PHONE"],
-            to=configs["RECIPIENT_PHONE"]
-        )
-        print(f"SMS sent, ID {message.sid}")
-
-    except TwilioRestException:
-        logging.exception("Error sending SMS Rain PyAlert")
-
-
 def main():
-    configs = pyutils.get_configs(REQUIRED_CONFIGURATION_KEYS)
+    configs = get_configs(REQUIRED_CONFIGURATION_KEYS)
 
     forecast = get_forecast(configs)
     rain_is_expected = {forecast['rain_is_expected']}
@@ -43,7 +28,8 @@ def main():
 
     if rain_is_expected:
         print("Sending SMS...")
-        send_sms(configs, forecast['results'])
+        forecast_details = str.join('\n ', forecast['results'])
+        send_twilio_sms(f"Rain PyAlert\n{forecast_details}", configs)
         print("Done")
 
 
