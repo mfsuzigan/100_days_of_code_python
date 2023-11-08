@@ -18,10 +18,11 @@ def get_pressed_key():
 
 
 def get_configs(required_configs_set: set, path: str = None):
+    configs = {}
+
     try:
         with open(f"{path + '/' if path else ''}configurations.ini") as configurations_file:
-            configs = {key: value for (key, value) in
-                       [line.strip().split("=") for line in configurations_file.readlines()]}
+            configs = dict([line.strip().split("=") for line in configurations_file.readlines()])
 
     except FileNotFoundError:
         logging.exception("Configuration file configurations.ini not found")
