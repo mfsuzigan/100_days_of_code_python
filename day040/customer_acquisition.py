@@ -3,7 +3,7 @@ import os
 import requests
 
 
-class User:
+class Customer:
     first_name: str
     last_name: str
     email: str
@@ -13,15 +13,15 @@ def main():
     print("Welcome to Michel's Fight Club")
     print("We find the best flight deals and email you.")
 
-    user = User()
-    user.first_name = input("What is your first name? ")
-    user.last_name = input("What is your last name? ")
-    user.email = input("What is your e-mail? ")
+    customer = Customer()
+    customer.first_name = input("What is your first name? ")
+    customer.last_name = input("What is your last name? ")
+    customer.email = input("What is your e-mail? ")
 
-    while input("Type your e-mail again: ") != user.email:
+    while input("Type your e-mail again: ") != customer.email:
         continue
 
-    post_user_data(user)
+    post_user_data(customer)
     print("Congratulations, you're in the club!")
 
 
