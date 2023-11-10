@@ -55,16 +55,18 @@ def set_departure_city_iata_code():
             f"{os.environ['PROFILE_DEPARTURE_CITY']}")
 
 
-def notify(date_from, date_to, affordable_flight_deals_by_city):
-    for notification_count, flight in enumerate(affordable_flight_deals_by_city,
-                                                start=1):
+def notify(date_from, date_to, affordable_destination_deals):
+    max_notifications = int(os.environ["PROFILE_MAX_NOTIFICATIONS_PER_DESTINATION"])
+    affordable_destination_deals = sorted(affordable_destination_deals, key=lambda k: k["price"])
 
-        if notification_count <= int(os.environ["PROFILE_MAX_NOTIFICATIONS_PER_DESTINATION"]):
+    for notification_count, flight in enumerate(affordable_destination_deals, start=1):
+
+        if notification_count <= max_notifications:
             message = (
                 f"Low price alert! Only {os.environ['PROFILE_CURRENCY']} ${flight['price']} "
                 f"to fly from {flight['cityFrom']}-{flight['cityCodeFrom']} "
                 f"to {flight['cityTo']}-{flight['cityCodeTo']}, "
-                f"from {date_from} to {date_to}")
+                f"from {date_from} to {date_to}.")
 
             logging.info(message)
 
@@ -104,8 +106,7 @@ def get_flight_deals(fly_to, date_from, date_to, lowest_price):
         "price_to": lowest_price
     }
 
-    response = requests.get(f"{os.environ['TEQUILA_API_ENDPOINT']}/v2/search",
-                            params=parameters,
+    response = requests.get(f"{os.environ['TEQUILA_API_ENDPOINT']}/v2/search", params=parameters,
                             headers=tequila_api_headers)
     response.raise_for_status()
     return response.json()
@@ -114,14 +115,14 @@ def get_flight_deals(fly_to, date_from, date_to, lowest_price):
 def put_flight_city_iata_code(city_iata_code, city_current_data):
     city_current_data["iataCode"] = city_iata_code
     body = {"price": city_current_data}
-    response = requests.put(f"{os.environ['SHEETY_SHEET_ENDPOINT']}/{city_current_data['id']}", json=body)
+    response = requests.put(f"{os.environ['SHEETY_SHEET_ENDPOINT']}/{city_current_data['id']}", json=body,
+                            headers=sheety_api_headers)
     response.raise_for_status()
     return response.json()
 
 
 def get_flight_sheet_data():
-    response = requests.get(os.environ["SHEETY_SHEET_ENDPOINT"],
-                            headers=sheety_api_headers)
+    response = requests.get(os.environ["SHEETY_SHEET_ENDPOINT"], headers=sheety_api_headers)
     response.raise_for_status()
     return response.json()
 
