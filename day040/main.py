@@ -55,22 +55,28 @@ def set_departure_city_iata_code():
             f"{os.environ['PROFILE_DEPARTURE_CITY']}")
 
 
-def notify(date_from, date_to, affordable_destination_deals):
+def notify(date_from, date_to, affordable_deals):
     max_notifications = int(os.environ["PROFILE_MAX_NOTIFICATIONS_PER_DESTINATION"])
-    affordable_destination_deals = sorted(affordable_destination_deals, key=lambda k: k["price"])
+    affordable_deals_sorted_by_price = sorted(affordable_deals, key=lambda k: k["price"])
 
-    for notification_count, flight in enumerate(affordable_destination_deals, start=1):
+    for notification_count, flight in enumerate(affordable_deals_sorted_by_price, start=1):
 
         if notification_count <= max_notifications:
             message = (
                 f"Low price alert! Only {os.environ['PROFILE_CURRENCY']} ${flight['price']} "
                 f"to fly from {flight['cityFrom']}-{flight['cityCodeFrom']} "
                 f"to {flight['cityTo']}-{flight['cityCodeTo']}, "
-                f"from {date_from} to {date_to}.")
+                f"from {date_from} to {date_to}. ")
 
-            logging.info(message)
+            stopover_info = f"Flight has 1 stopover via {flight['route'][0]['cityTo']}-{flight['route'][0]['flyTo']}" \
+                if len(flight['route']) > 1 else ""
+
+            logging.info(message + stopover_info)
 
             # TODO: send email
+
+        else:
+            break
 
 
 def get_affordable_flight_deals(date_from, date_to):
@@ -103,7 +109,8 @@ def get_flight_deals(fly_to, date_from, date_to, lowest_price):
         "date_from": date_from,
         "date_to": date_to,
         "curr": os.environ["PROFILE_CURRENCY"],
-        "price_to": lowest_price
+        "price_to": lowest_price,
+        "max_stopovers": 1
     }
 
     response = requests.get(f"{os.environ['TEQUILA_API_ENDPOINT']}/v2/search", params=parameters,
