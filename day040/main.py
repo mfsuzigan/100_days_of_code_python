@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import smtplib
 
 import requests
 from dateutil.relativedelta import relativedelta
@@ -21,9 +22,10 @@ def main():
     logging.info("Checking for affordable flight deals")
     affordable_flight_deals_by_city = get_affordable_flight_deals(date_from, date_to)
 
-    for (destination, flights) in affordable_flight_deals_by_city.items():
-        logging.info(f"Found {len(flights)} affordable flights for destination {destination}")
-        notify(date_from, date_to, flights)
+    logging.info("Retrieving customers")
+    customers = get_customers_data()
+
+    notify(customers, date_from, date_to, affordable_flight_deals_by_city)
 
     logging.info("Done!")
 
@@ -55,28 +57,57 @@ def set_departure_city_iata_code():
             f"{os.environ['PROFILE_DEPARTURE_CITY']}")
 
 
-def notify(date_from, date_to, affordable_deals):
-    max_notifications = int(os.environ["PROFILE_MAX_NOTIFICATIONS_PER_DESTINATION"])
-    affordable_deals_sorted_by_price = sorted(affordable_deals, key=lambda k: k["price"])
+def notify(customers, date_from, date_to, affordable_deals_by_city):
+    message = "Subject:Flight deals price alert\n"
+    message += f"FULL_NAME,\nYou have a low price alert for flight deals from {date_from} to {date_to}!\n"
+
+    for (destination, flights) in affordable_deals_by_city.items():
+        logging.info(f"Found {len(flights)} affordable flights for destination {destination}")
+        message += build_notification_message_for_destination(sorted(flights, key=lambda k: k["price"]))
+
+    message += "\nEnjoy!"
+
+    for customer in customers["users"]:
+        send_email(message.replace("FULL_NAME", f"{customer['firstName']} {customer['lastName']}"),
+                   customer["email"])
+
+
+def build_notification_message_for_destination(affordable_deals_sorted_by_price):
+    max_notifications_per_destination = int(os.environ["PROFILE_MAX_NOTIFICATIONS_PER_DESTINATION"])
+    message = ""
 
     for notification_count, flight in enumerate(affordable_deals_sorted_by_price, start=1):
 
-        if notification_count <= max_notifications:
-            message = (
-                f"Low price alert! Only {os.environ['PROFILE_CURRENCY']} ${flight['price']} "
-                f"to fly from {flight['cityFrom']}-{flight['cityCodeFrom']} "
-                f"to {flight['cityTo']}-{flight['cityCodeTo']}, "
-                f"from {date_from} to {date_to}. ")
+        if notification_count <= max_notifications_per_destination:
+            message += (f"\n- Only {os.environ['PROFILE_CURRENCY']} ${flight['price']} "
+                        f"to fly from {flight['cityFrom']}-{flight['cityCodeFrom']} "
+                        f"to {flight['cityTo']}-{flight['cityCodeTo']}. ")
 
             stopover_info = f"Flight has 1 stopover via {flight['route'][0]['cityTo']}-{flight['route'][0]['flyTo']}" \
                 if len(flight['route']) > 1 else ""
 
-            logging.info(message + stopover_info)
-
-            # TODO: send email
+            message += stopover_info
 
         else:
             break
+
+    return message
+
+
+def send_email(message, to_address):
+    with smtplib.SMTP(os.environ['SMTP_HOST'], int(os.environ['SMTP_PORT'])) as smtp_connection:
+        smtp_connection.starttls()
+        smtp_connection.login(user=os.environ['SMTP_USER'], password=os.environ['SMTP_PASSWORD'])
+        smtp_connection.sendmail(from_addr=os.environ['SMTP_FROM_ADDRESS'], to_addrs=to_address,
+                                 msg=message.encode(encoding="utf8"))
+
+    logging.info(f"E-mail sent to user {to_address}")
+
+
+def get_customers_data():
+    response = requests.get(f"{os.environ['SHEETY_SHEET_ENDPOINT']}/users", headers=sheety_api_headers)
+    response.raise_for_status()
+    return response.json()
 
 
 def get_affordable_flight_deals(date_from, date_to):
@@ -122,14 +153,14 @@ def get_flight_deals(fly_to, date_from, date_to, lowest_price):
 def put_flight_city_iata_code(city_iata_code, city_current_data):
     city_current_data["iataCode"] = city_iata_code
     body = {"price": city_current_data}
-    response = requests.put(f"{os.environ['SHEETY_SHEET_ENDPOINT']}/{city_current_data['id']}", json=body,
+    response = requests.put(f"{os.environ['SHEETY_SHEET_ENDPOINT']}/prices/{city_current_data['id']}", json=body,
                             headers=sheety_api_headers)
     response.raise_for_status()
     return response.json()
 
 
 def get_flight_sheet_data():
-    response = requests.get(os.environ["SHEETY_SHEET_ENDPOINT"], headers=sheety_api_headers)
+    response = requests.get(f"{os.environ['SHEETY_SHEET_ENDPOINT']}/prices", headers=sheety_api_headers)
     response.raise_for_status()
     return response.json()
 
