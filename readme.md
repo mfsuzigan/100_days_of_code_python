@@ -52,14 +52,18 @@ ___
 
 ### Intermediate+ Level
 
-| Day                | Description                                                        | Project               |
-|--------------------|--------------------------------------------------------------------|-----------------------|
-| [Day 032](/day032) | Send e-mail (smtplib) & manage dates (datetime)                    | Birthday Wisher       |
-| [Day 033](/day033) | API endpoints and API parameters - ISS overhead notifier           | ISS Overhead Notifier |
-| [Day 034](/day034) | API practice - Creating a GUI quiz app                             | GUI Quiz              |
-| [Day 035](/day035) | Authentication & environment variables: send SMS                   | SMS Rain Alert        |
-| [Day 036](/day036) | Stock trading news alert project                                   | Stock News Alert      |
-| [Day 037](/day037) | Habit tracking project: API post requests & headers                | Habit Tracker         |
-| [Day 038](/day038) | Workout tracking using natural language processing & Google Sheets | Workout Tracker       |
-| [Day 039](/day039) | Capstone Project: Flight Deal Finder part 1                        | Flight Deal Finder    |
-| [Day 040](/day040) | Capstone Project: Flight Deal Finder part 2                        | Flight Deal Finder    |
+| Day                | Description                                                        | Project                     |
+|--------------------|--------------------------------------------------------------------|-----------------------------|
+| [Day 032](/day032) | Send e-mail (smtplib) & manage dates (datetime)                    | Birthday Wisher             |
+| [Day 033](/day033) | API endpoints and API parameters - ISS overhead notifier           | ISS Overhead Notifier       |
+| [Day 034](/day034) | API practice - Creating a GUI quiz app                             | GUI Quiz                    |
+| [Day 035](/day035) | Authentication & environment variables: send SMS                   | SMS Rain Alert              |
+| [Day 036](/day036) | Stock trading news alert project                                   | Stock News Alert            |
+| [Day 037](/day037) | Habit tracking project: API post requests & headers                | Habit Tracker               |
+| [Day 038](/day038) | Workout tracking using natural language processing & Google Sheets | Workout Tracker             |
+| [Day 039](/day039) | Capstone Project: Flight Deal Finder part 1                        | Flight Deal Finder          |
+| [Day 040](/day040) | Capstone Project: Flight Deal Finder part 2                        | Flight Deal Finder          |
+| [Day 041](/day041) | Web Foundation: Introduction to HTML                               | Movie Ranking Page          |
+| [Day 042](/day042) | Web Foundation: Intermediate HTML                                  | Birthday Invite Website     |
+| [Day 043](/day043) | Web Foundation: Introduction to CSS                                | Color Vocab Website         |
+| [Day 044](/day044) | Web Foundation: Intermediate CSS                                   | Motivational Poster Website |
