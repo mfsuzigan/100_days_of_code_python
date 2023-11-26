@@ -69,3 +69,4 @@ ___
 | [Day 044](/day044) | Web Foundation: Intermediate CSS                         | Motivational Poster Website |
 | [Day 045](/day045) | Web Scraping with Beautiful Soup                         | Movie Webpage Scraper       |
 | [Day 046](/day046) | Create a Spotify Playlist using the Musical Time Machine | Musical Time Machine        |
+| [Day 047](/day047) | Create an Automated Amazon Price Tracker                 | Amazon Price Tracker        |
