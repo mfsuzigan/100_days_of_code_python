@@ -70,3 +70,4 @@ ___
 | [Day 045](/day045) | Web Scraping with Beautiful Soup                         | Movie Webpage Scraper       |
 | [Day 046](/day046) | Create a Spotify Playlist using the Musical Time Machine | Musical Time Machine        |
 | [Day 047](/day047) | Create an Automated Amazon Price Tracker                 | Amazon Price Tracker        |
+| [Day 048](/day048) | Selenium Webdriver Browser and Game Playing Bot          | Cookie Game Bot             |
