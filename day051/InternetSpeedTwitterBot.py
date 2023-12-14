@@ -23,11 +23,13 @@ class InternetSpeedTwitterBot:
         go_button = self.driver.find_element(By.CLASS_NAME, "start-text")
         go_button.click()
 
-        download_result = self.find_element_if_visible((By.CLASS_NAME,
-                                                        "result-item-container result-item-container-align-left"))
-        upload_result = self.find_element_if_visible((By.CLASS_NAME,
-                                                      "result-item-container result-item-container-align-left"))
-        pass
+        self.find_element_if_visible((By.CLASS_NAME, "result-data"))
+
+        self.down = self.driver.find_element(By.CLASS_NAME,
+                                             "result-data-large.number.result-data-value.download-speed").text
+
+        self.up = self.find_element_if_visible((By.CLASS_NAME,
+                                                "result-data-large.number.result-data-value.upload-speed")).text
 
     def find_element_if_visible(self, locator):
         wait = WebDriverWait(self.driver, WEBDRIVER_RENDER_TIMEOUT_SECONDS)
