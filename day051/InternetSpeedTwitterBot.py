@@ -1,4 +1,5 @@
 from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -10,9 +11,12 @@ WEBDRIVER_RENDER_TIMEOUT_SECONDS = 60
 class InternetSpeedTwitterBot:
 
     def __init__(self):
-        self.up = 0
-        self.down = 0
-        self.driver = Chrome()
+        self.upload_speed = 0
+        self.download_speed = 0
+        options = Options()
+        options.page_load_strategy = 'eager'
+        # svc = Service(ChromeDriverManager().install())
+        self.driver = Chrome(options=options)
 
     def get_internet_speed(self):
         self.driver.get(SPEED_TEST_URL)
@@ -25,11 +29,11 @@ class InternetSpeedTwitterBot:
 
         self.find_element_if_visible((By.CLASS_NAME, "result-data"))
 
-        self.down = self.driver.find_element(By.CLASS_NAME,
-                                             "result-data-large.number.result-data-value.download-speed").text
+        self.download_speed = self.driver.find_element(By.CLASS_NAME,
+                                                       "result-data-large.number.result-data-value.download-speed").text
 
-        self.up = self.find_element_if_visible((By.CLASS_NAME,
-                                                "result-data-large.number.result-data-value.upload-speed")).text
+        self.upload_speed = self.driver.find_element(By.CLASS_NAME,
+                                                     "result-data-large.number.result-data-value.upload-speed").text
 
     def find_element_if_visible(self, locator):
         wait = WebDriverWait(self.driver, WEBDRIVER_RENDER_TIMEOUT_SECONDS)
