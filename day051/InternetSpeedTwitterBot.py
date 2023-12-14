@@ -1,3 +1,5 @@
+import logging
+
 from selenium.common import ElementClickInterceptedException, ElementNotInteractableException
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
@@ -24,6 +26,7 @@ class InternetSpeedTwitterBot:
 
         self.accept_terms()
 
+        logging.info("Starting test")
         go_button = self.driver.find_element(By.CLASS_NAME, "start-text")
         go_button.click()
 
@@ -32,6 +35,8 @@ class InternetSpeedTwitterBot:
                                                        "result-data-large.number.result-data-value.download-speed").text
         self.upload_speed = self.driver.find_element(By.CLASS_NAME,
                                                      "result-data-large.number.result-data-value.upload-speed").text
+
+        logging.info(f"Test finished. Speeds (Mbps): download {self.download_speed}, upload: {self.upload_speed}")
 
     def accept_terms(self):
         attempts = 1
@@ -42,6 +47,7 @@ class InternetSpeedTwitterBot:
                 accept_terms_button.click()
 
             except (ElementClickInterceptedException, ElementNotInteractableException):
+                logging.warning("Error accepting page terms, retrying")
                 attempts += 1
 
     def find_element_if_visible(self, locator):
