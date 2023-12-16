@@ -19,9 +19,13 @@ class InternetSpeedTwitterBot:
         EAGER = "eager"
         NORMAL = "normal"
 
-    def __init__(self, page_load_strategy: PageLoadStrategy = None):
-        self.upload_speed = 0
-        self.download_speed = 0
+    def __init__(self, min_download_speed, min_upload_speed, page_load_strategy: PageLoadStrategy = None):
+        self.upload_speed = -1
+        self.min_upload_speed = min_upload_speed
+
+        self.download_speed = -1
+        self.min_download_speed = min_download_speed
+
         self.driver = self.get_web_driver(page_load_strategy)
 
     def get_web_driver(self, page_load_strategy: PageLoadStrategy = None):
@@ -69,25 +73,42 @@ class InternetSpeedTwitterBot:
         return wait.until(ec.visibility_of_element_located(locator))
 
     def tweet_at_provider(self, username, password):
+        test_has_been_conducted = self.download_speed > 0 and self.upload_speed > 0
+        speeds_are_within_range = (self.upload_speed > self.min_upload_speed and
+                                   self.download_speed > self.min_download_speed)
+
+        if not test_has_been_conducted:
+            logging.info("No test has been conducted, skipping tweet")
+
+        elif speeds_are_within_range:
+            logging.info("Download and upload speed within range, skipping tweet")
+
+        else:
+            logging.info("Logging in to Twitter")
+            self.twitter_login(password, username)
+
+            logging.info("Tweeeting to internet provider about internet speed")
+            self.tweet_message("")
+
+        pass
+
+    def twitter_login(self, password, username):
         self.driver.get(TWITTER_URL)
         sign_in_button = self.find_element_if_visible((By.XPATH,
                                                        "//*[@id='react-root']/div/div/div[2]/main/"
                                                        "div/div/div[1]/div/div/div[3]/div[5]/a/div"))
         sign_in_button.click()
-
         base_xpath = "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]"
         username_input = self.find_element_if_visible(
             (By.XPATH, f"{base_xpath}/div/div/div/div[5]/label/div/div[2]/div/input"))
         username_input.send_keys(username)
-
         next_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div/div/div/div[6]/div"))
         next_button.click()
-
         password_input = self.find_element_if_visible(
             (By.XPATH, f"{base_xpath}/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input"))
         password_input.send_keys(password)
-
         login_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div[2]/div/div[1]/div/div/div/div"))
         login_button.click()
 
+    def tweet_message(self, message):
         pass
