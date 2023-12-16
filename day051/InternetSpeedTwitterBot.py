@@ -68,7 +68,7 @@ class InternetSpeedTwitterBot:
         wait = WebDriverWait(self.driver, WEBDRIVER_RENDER_TIMEOUT_SECONDS)
         return wait.until(ec.visibility_of_element_located(locator))
 
-    def tweet_at_provider(self):
+    def tweet_at_provider(self, username, password):
         self.driver.get(TWITTER_URL)
         sign_in_button = self.find_element_if_visible((By.XPATH,
                                                        "//*[@id='react-root']/div/div/div[2]/main/"
@@ -78,14 +78,14 @@ class InternetSpeedTwitterBot:
         base_xpath = "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]"
         username_input = self.find_element_if_visible(
             (By.XPATH, f"{base_xpath}/div/div/div/div[5]/label/div/div[2]/div/input"))
-        username_input.send_keys("USERNAME")
+        username_input.send_keys(username)
 
         next_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div/div/div/div[6]/div"))
         next_button.click()
 
         password_input = self.find_element_if_visible(
             (By.XPATH, f"{base_xpath}/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input"))
-        password_input.send_keys("PASSWORD")
+        password_input.send_keys(password)
 
         login_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div[2]/div/div[1]/div/div/div/div"))
         login_button.click()
