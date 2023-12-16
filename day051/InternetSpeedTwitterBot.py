@@ -74,18 +74,20 @@ class InternetSpeedTwitterBot:
                                                        "//*[@id='react-root']/div/div/div[2]/main/"
                                                        "div/div/div[1]/div/div/div[3]/div[5]/a/div"))
         sign_in_button.click()
-        username_input = self.find_element_if_visible((By.XPATH,
-                                                       "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input"))
 
+        base_xpath = "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]"
+        username_input = self.find_element_if_visible(
+            (By.XPATH, f"{base_xpath}/div/div/div/div[5]/label/div/div[2]/div/input"))
         username_input.send_keys("USERNAME")
-        next_button = self.find_element_if_visible((By.XPATH,
-                                                    "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[6]/div"))
+
+        next_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div/div/div/div[6]/div"))
         next_button.click()
-        password_input = self.find_element_if_visible((By.XPATH,
-                                                       "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input"))
+
+        password_input = self.find_element_if_visible(
+            (By.XPATH, f"{base_xpath}/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input"))
         password_input.send_keys("PASSWORD")
 
-        login_button = self.find_element_if_visible((By.XPATH,
-                                                     "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div/div"))
+        login_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div[2]/div/div[1]/div/div/div/div"))
         login_button.click()
+
         pass
