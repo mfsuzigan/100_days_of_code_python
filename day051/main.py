@@ -25,13 +25,13 @@ def main():
     global args
     args = get_args()
 
-    # bot = InternetSpeedTwitterBot(InternetSpeedTwitterBot.PageLoadStrategy.EAGER)
-    # bot.get_internet_speed()
+    internet_provider = InternetProvider(args.service_provider, float(args.min_download), float(args.min_upload))
+    bot = InternetSpeedTwitterBot(internet_provider, InternetSpeedTwitterBot.PageLoadStrategy.EAGER)
+    bot.get_internet_speed()
 
-    # bot.set_page_load_strategy(InternetSpeedTwitterBot.PageLoadStrategy.NORMAL)
-    internet_provider = InternetProvider("[TEST]", 100, 100)
-    bot = InternetSpeedTwitterBot(internet_provider)
-    bot.tweet_at_provider(args.username, args.password)
+    bot.set_page_load_strategy(InternetSpeedTwitterBot.PageLoadStrategy.NORMAL)
+    # bot = InternetSpeedTwitterBot(internet_provider)
+    bot.tweet_at_provider(args.account, args.password)
 
 
 if __name__ == "__main__":

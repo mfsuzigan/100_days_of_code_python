@@ -49,10 +49,10 @@ class InternetSpeedTwitterBot:
         go_button.click()
 
         self.find_element_if_visible((By.CLASS_NAME, "result-data"))
-        self.download_speed = self.driver.find_element(By.CLASS_NAME,
-                                                       "result-data-large.number.result-data-value.download-speed").text
-        self.upload_speed = self.driver.find_element(By.CLASS_NAME,
-                                                     "result-data-large.number.result-data-value.upload-speed").text
+        self.download_speed = float(self.driver.find_element(By.CLASS_NAME,
+                                                             "result-data-large.number.result-data-value.download-speed").text)
+        self.upload_speed = float(self.driver.find_element(By.CLASS_NAME,
+                                                           "result-data-large.number.result-data-value.upload-speed").text)
 
         logging.info(f"Test finished. Speeds (Mbps): download {self.download_speed}, upload: {self.upload_speed}")
         self.driver.quit()
@@ -89,9 +89,9 @@ class InternetSpeedTwitterBot:
             self.twitter_login(password, username)
 
             logging.info("Tweeeting to internet provider about internet speed")
-            message = (f"Hey {self.internet_provider.name}, why is my internet speed\n\n"
-                       f"download: {self.download_speed} Mbps\n"
-                       f"upload: {self.upload_speed}\n Mbps\n\n"
+            message = (f"[TEST] Hey {self.internet_provider.name}, why is my internet speed\n\n"
+                       f"️️▪️download: {self.download_speed} Mbps\n"
+                       f"️️▪️upload: {self.upload_speed}\n Mbps\n\n"
                        f"when I pay for {self.internet_provider.min_download_speed} download/"
                        f" {self.upload_speed} upload?")
             self.tweet_message(message)
@@ -117,4 +117,15 @@ class InternetSpeedTwitterBot:
         login_button.click()
 
     def tweet_message(self, message):
-        pass
+        tweet_button = self.find_element_if_visible(
+            (By.XPATH, "//*[@id='react-root']/div/div/div[2]/header/div/div/div/div[1]/div[3]"))
+        tweet_button.click()
+
+        tweet_input = self.find_element_if_visible((By.XPATH,
+                                                    "//*[@id='react-root']/div/div/div[2]/main/div/div/div[3]/div/div[2]/div[1]/div/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div/div[2]/div/div/div/div/span"))
+        tweet_input.sendkeys(message)
+
+        send_button = self.find_element_if_visible(
+            (By.XPATH, "//*[@id='react-root']/div/div/div[2]/main/div/div/div[2]/div/div/div/div/div[3]/div/div[2]"))
+
+        send_button.click()
