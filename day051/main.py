@@ -1,6 +1,7 @@
 import argparse
 import logging
 
+from day051.InternetProvider import InternetProvider
 from day051.InternetSpeedTwitterBot import InternetSpeedTwitterBot
 
 args: argparse.Namespace
@@ -28,7 +29,8 @@ def main():
     # bot.get_internet_speed()
 
     # bot.set_page_load_strategy(InternetSpeedTwitterBot.PageLoadStrategy.NORMAL)
-    bot = InternetSpeedTwitterBot(min_download_speed=args.min_download, min_upload_speed=args.min_upload)
+    internet_provider = InternetProvider("[TEST]", 100, 100)
+    bot = InternetSpeedTwitterBot(internet_provider)
     bot.tweet_at_provider(args.username, args.password)
 
 

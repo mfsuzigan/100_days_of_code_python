@@ -8,10 +8,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
+from day051 import InternetProvider
+
 SPEED_TEST_URL = "https://www.speedtest.net/"
 TWITTER_URL = "https://twitter.com/"
 WEBDRIVER_RENDER_TIMEOUT_SECONDS = 60
-MAX_OPERATIONS_ATTEMPTS = 5
+MAX_OPERATION_ATTEMPTS = 5
 
 
 class InternetSpeedTwitterBot:
@@ -19,12 +21,11 @@ class InternetSpeedTwitterBot:
         EAGER = "eager"
         NORMAL = "normal"
 
-    def __init__(self, min_download_speed, min_upload_speed, page_load_strategy: PageLoadStrategy = None):
-        self.upload_speed = -1
-        self.min_upload_speed = min_upload_speed
+    def __init__(self, internet_provider: InternetProvider, page_load_strategy: PageLoadStrategy = None):
+        self.internet_provider = internet_provider
 
+        self.upload_speed = -1
         self.download_speed = -1
-        self.min_download_speed = min_download_speed
 
         self.driver = self.get_web_driver(page_load_strategy)
 
@@ -41,7 +42,7 @@ class InternetSpeedTwitterBot:
     def get_internet_speed(self):
         self.driver.get(SPEED_TEST_URL)
 
-        self.accept_terms()
+        self.accept_test_terms()
 
         logging.info("Starting test")
         go_button = self.driver.find_element(By.CLASS_NAME, "start-text")
@@ -56,11 +57,11 @@ class InternetSpeedTwitterBot:
         logging.info(f"Test finished. Speeds (Mbps): download {self.download_speed}, upload: {self.upload_speed}")
         self.driver.quit()
 
-    def accept_terms(self):
+    def accept_test_terms(self):
         attempts = 1
         accept_terms_button = self.find_element_if_visible((By.ID, "onetrust-accept-btn-handler"))
 
-        while attempts <= MAX_OPERATIONS_ATTEMPTS:
+        while attempts <= MAX_OPERATION_ATTEMPTS:
             try:
                 accept_terms_button.click()
 
@@ -74,8 +75,8 @@ class InternetSpeedTwitterBot:
 
     def tweet_at_provider(self, username, password):
         test_has_been_conducted = self.download_speed > 0 and self.upload_speed > 0
-        speeds_are_within_range = (self.upload_speed > self.min_upload_speed and
-                                   self.download_speed > self.min_download_speed)
+        speeds_are_within_range = (self.upload_speed >= self.internet_provider.min_upload_speed and
+                                   self.download_speed >= self.internet_provider.min_download_speed)
 
         if not test_has_been_conducted:
             logging.info("No test has been conducted, skipping tweet")
@@ -88,7 +89,12 @@ class InternetSpeedTwitterBot:
             self.twitter_login(password, username)
 
             logging.info("Tweeeting to internet provider about internet speed")
-            self.tweet_message("")
+            message = (f"Hey {self.internet_provider.name}, why is my internet speed\n\n"
+                       f"download: {self.download_speed} Mbps\n"
+                       f"upload: {self.upload_speed}\n Mbps\n\n"
+                       f"when I pay for {self.internet_provider.min_download_speed} download/"
+                       f" {self.upload_speed} upload?")
+            self.tweet_message(message)
 
         pass
 
