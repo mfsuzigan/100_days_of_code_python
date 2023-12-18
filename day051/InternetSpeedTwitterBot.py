@@ -90,8 +90,8 @@ class InternetSpeedTwitterBot:
 
             logging.info("Tweeeting to internet provider about internet speed")
             message = (f"[TEST] Hey {self.internet_provider.name}, why is my internet speed\n\n"
-                       f"️️▪️download: {self.download_speed} Mbps\n"
-                       f"️️▪️upload: {self.upload_speed}\n Mbps\n\n"
+                       f"◦ download: {self.download_speed} Mbps\n"
+                       f"◦ upload: {self.upload_speed} Mbps\n\n"
                        f"when I pay for {self.internet_provider.min_download_speed} download/"
                        f" {self.upload_speed} upload?")
             self.tweet_message(message)
@@ -122,10 +122,13 @@ class InternetSpeedTwitterBot:
         tweet_button.click()
 
         tweet_input = self.find_element_if_visible((By.XPATH,
-                                                    "//*[@id='react-root']/div/div/div[2]/main/div/div/div[3]/div/div[2]/div[1]/div/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div/div[2]/div/div/div/div/span"))
-        tweet_input.sendkeys(message)
+                                                    "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div/div[2]/div/div/div/div"))
+
+        tweet_input.send_keys(message)
 
         send_button = self.find_element_if_visible(
-            (By.XPATH, "//*[@id='react-root']/div/div/div[2]/main/div/div/div[2]/div/div/div/div/div[3]/div/div[2]"))
+            (By.XPATH,
+             "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div/div/div/div[2]/div[2]/div/div/div/div[4]"))
 
         send_button.click()
+        pass
