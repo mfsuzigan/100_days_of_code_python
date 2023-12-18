@@ -49,10 +49,10 @@ class InternetSpeedTwitterBot:
         go_button.click()
 
         self.find_element_if_visible((By.CLASS_NAME, "result-data"))
-        self.download_speed = float(self.driver.find_element(By.CLASS_NAME,
-                                                             "result-data-large.number.result-data-value.download-speed").text)
-        self.upload_speed = float(self.driver.find_element(By.CLASS_NAME,
-                                                           "result-data-large.number.result-data-value.upload-speed").text)
+        
+        base_class_name = "result-data-large.number.result-data-value"
+        self.download_speed = float(self.driver.find_element(By.CLASS_NAME, f"{base_class_name}.download-speed").text)
+        self.upload_speed = float(self.driver.find_element(By.CLASS_NAME, f"{base_class_name}.upload-speed").text)
 
         logging.info(f"Test finished. Speeds (Mbps): download {self.download_speed}, upload: {self.upload_speed}")
         self.driver.quit()
@@ -104,15 +104,20 @@ class InternetSpeedTwitterBot:
                                                        "//*[@id='react-root']/div/div/div[2]/main/"
                                                        "div/div/div[1]/div/div/div[3]/div[5]/a/div"))
         sign_in_button.click()
+
         base_xpath = "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]"
+
         username_input = self.find_element_if_visible(
             (By.XPATH, f"{base_xpath}/div/div/div/div[5]/label/div/div[2]/div/input"))
         username_input.send_keys(username)
+
         next_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div/div/div/div[6]/div"))
         next_button.click()
+
         password_input = self.find_element_if_visible(
             (By.XPATH, f"{base_xpath}/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input"))
         password_input.send_keys(password)
+
         login_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div[2]/div/div[1]/div/div/div/div"))
         login_button.click()
 
@@ -121,14 +126,14 @@ class InternetSpeedTwitterBot:
             (By.XPATH, "//*[@id='react-root']/div/div/div[2]/header/div/div/div/div[1]/div[3]"))
         tweet_button.click()
 
-        tweet_input = self.find_element_if_visible((By.XPATH,
-                                                    "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div/div[2]/div/div/div/div"))
+        base_xpath = ("//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]"
+                      "/div/div/div/div[3]/div[2]/div[1]/div/div/div")
 
+        tweet_input = self.find_element_if_visible((By.XPATH,
+                                                    f"{base_xpath}/div[1]/div[2]/div/div/div/div/div/div/div/div"
+                                                    f"/div/div/div/label/div[1]/div/div/div/div/div/div[2]/div/div"
+                                                    f"/div/div"))
         tweet_input.send_keys(message)
 
-        send_button = self.find_element_if_visible(
-            (By.XPATH,
-             "//*[@id='layers']/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div/div/div/div[2]/div[2]/div/div/div/div[4]"))
-
+        send_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div[2]/div[2]/div/div/div/div[4]"))
         send_button.click()
-        pass
