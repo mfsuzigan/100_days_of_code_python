@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
-from day051 import InternetProvider
+import InternetProvider
 
 SPEED_TEST_URL = "https://www.speedtest.net/"
 TWITTER_URL = "https://twitter.com/"
@@ -21,27 +21,37 @@ class InternetSpeedTwitterBot:
         EAGER = "eager"
         NORMAL = "normal"
 
-    def __init__(self, internet_provider: InternetProvider, page_load_strategy: PageLoadStrategy = None):
+    def __init__(self, internet_provider: InternetProvider, invisible,
+                 page_load_strategy: PageLoadStrategy = None):
         self.internet_provider = internet_provider
 
         self.upload_speed = -1
         self.download_speed = -1
+        self.invisible = invisible
+        self.page_load_strategy = page_load_strategy
 
-        self.driver = self.get_web_driver(page_load_strategy)
+        self.driver = self.get_web_driver()
 
-    def get_web_driver(self, page_load_strategy: PageLoadStrategy = None):
+    def get_web_driver(self):
+        logging.info("Setting up web driver")
         options = Options()
-        options.page_load_strategy = page_load_strategy.value \
-            if page_load_strategy else self.PageLoadStrategy.NORMAL.value
+
+        if self.invisible:
+            options.add_argument("--headless")
+
+        options.page_load_strategy = self.page_load_strategy.value \
+            if self.page_load_strategy else self.PageLoadStrategy.NORMAL.value
+
         return Chrome(options=options)
 
     def set_page_load_strategy(self, page_load_strategy):
+        self.page_load_strategy = page_load_strategy
         self.driver.quit()
-        self.driver = self.get_web_driver(page_load_strategy=page_load_strategy)
+        self.driver = self.get_web_driver()
 
     def get_internet_speed(self):
+        logging.info("Opening test page")
         self.driver.get(SPEED_TEST_URL)
-
         self.accept_test_terms()
 
         logging.info("Starting test")
@@ -49,7 +59,7 @@ class InternetSpeedTwitterBot:
         go_button.click()
 
         self.find_element_if_visible((By.CLASS_NAME, "result-data"))
-        
+
         base_class_name = "result-data-large.number.result-data-value"
         self.download_speed = float(self.driver.find_element(By.CLASS_NAME, f"{base_class_name}.download-speed").text)
         self.upload_speed = float(self.driver.find_element(By.CLASS_NAME, f"{base_class_name}.upload-speed").text)
@@ -93,7 +103,7 @@ class InternetSpeedTwitterBot:
                        f"◦ download: {self.download_speed} Mbps\n"
                        f"◦ upload: {self.upload_speed} Mbps\n\n"
                        f"when I pay for {self.internet_provider.min_download_speed} download/"
-                       f" {self.upload_speed} upload?")
+                       f" {self.internet_provider.min_upload_speed} upload?")
             self.tweet_message(message)
 
         pass
@@ -137,3 +147,4 @@ class InternetSpeedTwitterBot:
 
         send_button = self.find_element_if_visible((By.XPATH, f"{base_xpath}/div[2]/div[2]/div/div/div/div[4]"))
         send_button.click()
+        logging.info("Tweet sent")
