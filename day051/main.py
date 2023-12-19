@@ -15,6 +15,7 @@ def get_args():
     arg_parser.add_argument("--min-upload", "-u", required=True, help="Minimum expected upload speed")
     arg_parser.add_argument("--min-download", "-d", required=True, help="Minimum expected download speed")
     arg_parser.add_argument("--service-provider", "-s", required=True, help="Internet provider's Twitter account")
+    arg_parser.add_argument("--headless", "-h", required=False, help="Run headless Chrome driver")
 
     return arg_parser.parse_args()
 
