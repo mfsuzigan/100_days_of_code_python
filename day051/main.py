@@ -14,8 +14,9 @@ def get_args():
     arg_parser.add_argument("--password", "-p", required=True, help="Twitter account's password")
     arg_parser.add_argument("--min-upload", "-u", required=True, help="Minimum expected upload speed")
     arg_parser.add_argument("--min-download", "-d", required=True, help="Minimum expected download speed")
-    arg_parser.add_argument("--service-provider", "-s", required=True, help="Internet provider's Twitter account")
-    arg_parser.add_argument("--invisible", "-i", action="store_true", help="Run invisibly (headless Chrome driver)")
+    arg_parser.add_argument("--service-provider", "-s", required=True, help="Internet provider's Twitter account/name")
+    arg_parser.add_argument("--invisible", "-i", action="store_true",
+                            help="Flag: run invisibly (headless Chrome driver)")
 
     return arg_parser.parse_args()
 
@@ -31,7 +32,6 @@ def main():
     bot.get_internet_speed()
 
     bot.set_page_load_strategy(InternetSpeedTwitterBot.PageLoadStrategy.NORMAL)
-    # bot = InternetSpeedTwitterBot(internet_provider)
     bot.tweet_at_provider(args.account, args.password)
 
     logging.info("Done")

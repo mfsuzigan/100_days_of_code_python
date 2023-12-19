@@ -99,14 +99,12 @@ class InternetSpeedTwitterBot:
             self.twitter_login(password, username)
 
             logging.info("Tweeeting to internet provider about internet speed")
-            message = (f"[TEST] Hey {self.internet_provider.name}, why is my internet speed\n\n"
+            message = (f"Hey {self.internet_provider.name}, why is my internet speed\n\n"
                        f"◦ download: {self.download_speed} Mbps\n"
                        f"◦ upload: {self.upload_speed} Mbps\n\n"
                        f"when I pay for {self.internet_provider.min_download_speed} download/"
                        f" {self.internet_provider.min_upload_speed} upload?")
             self.tweet_message(message)
-
-        pass
 
     def twitter_login(self, password, username):
         self.driver.get(TWITTER_URL)

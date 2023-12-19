@@ -71,4 +71,4 @@ ___
 | [Day 046](/day046) | Create a Spotify Playlist using the Musical Time Machine | Musical Time Machine        |
 | [Day 047](/day047) | Create an Automated Amazon Price Tracker                 | Amazon Price Tracker        |
 | [Day 048](/day048) | Selenium Webdriver Browser and Game Playing Bot          | Cookie Game Bot             |
-| [Day 049](/day049) | Automating Job Applications on LinkedIn                  |                             |
+| [Day 051](/day051) | Internet Speed Twitter Complaint Bot                     | Internet Speed Tweet Bot    |
