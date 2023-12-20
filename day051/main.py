@@ -4,8 +4,6 @@ import logging
 from InternetProvider import InternetProvider
 from InternetSpeedTwitterBot import InternetSpeedTwitterBot
 
-args: argparse.Namespace
-
 
 def get_args():
     logging.info("Reading args")
@@ -24,13 +22,12 @@ def get_args():
 def main():
     logging.getLogger().setLevel(logging.INFO)
 
-    global args
     args = get_args()
 
     internet_provider = InternetProvider(args.service_provider, float(args.min_download), float(args.min_upload))
+
     bot = InternetSpeedTwitterBot(internet_provider, args.invisible, InternetSpeedTwitterBot.PageLoadStrategy.EAGER)
     bot.get_internet_speed()
-
     bot.set_page_load_strategy(InternetSpeedTwitterBot.PageLoadStrategy.NORMAL)
     bot.tweet_at_provider(args.account, args.password)
 
