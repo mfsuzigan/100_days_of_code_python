@@ -5,27 +5,25 @@ import requests
 from bs4 import BeautifulSoup
 from models.rental_listing import RentalListing
 
+RENTING_WEBSITE_LOCATION = "https://appbrewery.github.io/Zillow-Clone/"
+
 
 def main():
-    get_rental_listings_data()
-    # process data
-    # send data to form
+    for listing in get_renting_website_data():
+        anchor_element = listing.findNext(name="a")
+        address = anchor_element.text.strip()
+        link = anchor_element.attrs["href"]
+        price = re.search(r"^\$\d*,*\d*", listing.findNext(name="span").text).group()
+        write_to_spreadsheet(RentalListing(price=price, address=address, link=link))
+
+
+def write_to_spreadsheet(rental_listing):
     pass
 
 
-def to_rental_listings(raw_data):
-    for listing in raw_data:
-        price = 0
-        address = ""
-        link = ""
-        RentalListing(price, address, link)
-
-
-def get_rental_listings_data():
-    soup = BeautifulSoup(requests.get("https://appbrewery.github.io/Zillow-Clone/").content, "html.parser")
-    raw_data = soup.find_all(class_=re.compile("ListItem"))
-    rental_listings = to_rental_listings(raw_data)
-    return rental_listings
+def get_renting_website_data():
+    soup = BeautifulSoup(requests.get(RENTING_WEBSITE_LOCATION).content, "html.parser")
+    return soup.find_all(class_=re.compile("ListItem"))
 
 
 if __name__ == "__main__":
