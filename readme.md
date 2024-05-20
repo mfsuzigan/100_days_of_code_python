@@ -72,4 +72,4 @@ ___
 | [Day 047](/day047) | Create an Automated Amazon Price Tracker                 | Amazon Price Tracker        |
 | [Day 048](/day048) | Selenium Webdriver Browser and Game Playing Bot          | Cookie Game Bot             |
 | [Day 051](/day051) | Internet Speed Twitter Complaint Bot                     | Internet Speed Tweet Bot    |
-| [Day 053](/day053) | Web scraping capstone - Data Entry Job Automation        | TBA                         |
+| [Day 053](/day053) | Web scraping capstone - Data Entry Job Automation        | Rental Listings Scraper     |
