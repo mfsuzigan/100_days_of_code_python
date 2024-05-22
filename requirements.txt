@@ -10,3 +10,4 @@ vonage~=3.11.0
 beautifulsoup4~=4.12.2
 spotipy~=2.23.0
 selenium~=4.15.2
+flask~=3.0.3
