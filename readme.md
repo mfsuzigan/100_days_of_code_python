@@ -73,3 +73,4 @@ ___
 | [Day 048](/day048) | Selenium Webdriver Browser and Game Playing Bot          | Cookie Game Bot             |
 | [Day 051](/day051) | Internet Speed Twitter Complaint Bot                     | Internet Speed Tweet Bot    |
 | [Day 053](/day053) | Web scraping capstone - Data Entry Job Automation        | Rental Listings Scraper     |
+| [Day 054](/day054) | Introduction to Web Development with Flask               | TBA                         |
