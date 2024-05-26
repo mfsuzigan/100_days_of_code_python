@@ -7,7 +7,17 @@ def decorator(func):
     return func
 
 
-@decorator
+def decorator2(func):
+    def inner():
+        print("Inner before")
+        func()
+        print("Inner after")
+
+    print("Decorator2")
+    return inner
+
+
+@decorator2
 def simple_decorated_function():
     print("Hi from a decorated function")
 
