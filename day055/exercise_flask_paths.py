@@ -8,5 +8,10 @@ def greet_person(name):
     return f"Hello, {name}!"
 
 
+@app.route("/faulty/<int:number>")
+def faulty_endpoint(number):
+    return f"Take this: {number / 0}!"
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
