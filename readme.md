@@ -74,3 +74,4 @@ ___
 | [Day 051](/day051) | Internet Speed Twitter Complaint Bot                     | Internet Speed Tweet Bot    |
 | [Day 053](/day053) | Web scraping capstone - Data Entry Job Automation        | Rental Listings Scraper     |
 | [Day 054](/day054) | Introduction to Web Development with Flask               | [exercises]                 |
+| [Day 055](/day055) | HTML & URL Parsing in Flask and Higher Lower Game        | Higher Lower                |
