@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/greet/<name>")
 def greet_person(name):
-    return f"Hello, {name}!"
+    return f"<h1 style='text-align: center'>Hello, {name}!</h1>"
 
 
 @app.route("/faulty/<int:number>")
